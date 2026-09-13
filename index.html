@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para ver</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
   :root {
     --bg: #131316;
@@ -14,6 +16,7 @@
     --muted: #86868f;
     --accent: #9c6b4f;
     --accent-soft: #9c6b4f22;
+    --warn: #b5654f;
   }
   * { box-sizing: border-box; }
   body {
@@ -39,6 +42,17 @@
     font-size: 14px;
     margin: 0 0 28px;
   }
+  .banner {
+    display: none;
+    background: #b5654f18;
+    border: 1px solid #b5654f55;
+    color: #d7a08e;
+    font-size: 13px;
+    padding: 10px 13px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
 
   form {
     background: var(--surface);
@@ -50,8 +64,7 @@
     gap: 10px;
     margin-bottom: 36px;
   }
-  .row { display: flex; gap: 8px; }
-  input, select {
+  input {
     background: var(--surface-2);
     border: 1px solid var(--line);
     color: var(--text);
@@ -63,9 +76,8 @@
     font-family: inherit;
     transition: border-color 0.15s ease;
   }
-  input:focus, select:focus { border-color: var(--accent); }
+  input:focus { border-color: var(--accent); }
   input::placeholder { color: var(--muted); }
-  select { appearance: none; cursor: pointer; }
 
   button {
     background: var(--accent);
@@ -100,6 +112,7 @@
   .pill.active { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
 
   .status { font-size: 13px; color: var(--muted); min-height: 16px; }
+  .status.error { color: var(--warn); }
 
   .section { margin-bottom: 36px; }
   .section-head {
@@ -223,6 +236,10 @@
   <h1>Para ver</h1>
   <p class="sub">Lista compartida de Diego &amp; Andro.</p>
 
+  <div class="banner" id="storageBanner">
+    No se pudo conectar con la base de datos. Revisa tu conexión o vuelve a cargar la página.
+  </div>
+
   <form id="form">
     <div class="who-select" id="whoSelect">
       <button type="button" class="pill active" data-who="Diego">Diego</button>
@@ -234,9 +251,7 @@
       <button type="button" class="pill" data-cat="Peliculas">Películas</button>
     </div>
     <input id="url" type="text" placeholder="Pega el enlace acá" required>
-    <div class="row">
-      <input id="noteInput" type="text" placeholder="Nota (opcional)">
-    </div>
+    <input id="noteInput" type="text" placeholder="Nota (opcional)">
     <button type="submit" id="submitBtn">Agregar</button>
     <div class="status" id="status"></div>
   </form>
@@ -245,7 +260,21 @@
 </div>
 
 <script>
-  const KEY = 'watchlist:items';
+  // --- Firebase setup ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyDMVbDCxFJo5_J0wMoiNb4AVrZCiV4GFGc",
+    authDomain: "para-ver-ce1b9.firebaseapp.com",
+    databaseURL: "https://para-ver-ce1b9-default-rtdb.firebaseio.com",
+    projectId: "para-ver-ce1b9",
+    storageBucket: "para-ver-ce1b9.firebasestorage.app",
+    messagingSenderId: "101656425888",
+    appId: "1:101656425888:web:1fd31b060bbf21f6a3a0c5",
+    measurementId: "G-3GJDE3H6L8"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const itemsRef = db.ref('paraVer/items');
+
   const CATEGORIES = ['Anime', 'YouTube', 'Peliculas'];
   const CAT_LABELS = { Anime: 'Anime', YouTube: 'YouTube', Peliculas: 'Películas' };
   let items = [];
@@ -254,6 +283,7 @@
 
   const sectionsEl = document.getElementById('sections');
   const statusEl = document.getElementById('status');
+  const bannerEl = document.getElementById('storageBanner');
   const form = document.getElementById('form');
   const urlInput = document.getElementById('url');
   const noteInput = document.getElementById('noteInput');
@@ -279,7 +309,28 @@
     catch { return url; }
   }
 
+  function youtubeIdFrom(url) {
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+
   async function fetchPreview(url) {
+    if (/youtu\.?be/.test(url)) {
+      try {
+        const res = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url));
+        if (res.ok) {
+          const data = await res.json();
+          const id = youtubeIdFrom(url);
+          return {
+            title: data.title || '',
+            description: data.author_name ? 'YouTube · ' + data.author_name : '',
+            image: data.thumbnail_url || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : '')
+          };
+        }
+      } catch {}
+      const id = youtubeIdFrom(url);
+      if (id) return { title: '', description: '', image: `https://i.ytimg.com/vi/${id}/hqdefault.jpg` };
+    }
     try {
       const res = await fetch('https://api.microlink.io/?url=' + encodeURIComponent(url));
       const data = await res.json();
@@ -330,6 +381,7 @@
           thumb.className = 'thumb';
           thumb.src = item.image;
           thumb.alt = '';
+          thumb.onerror = () => { thumb.style.display = 'none'; };
         } else {
           thumb = document.createElement('div');
           thumb.className = 'thumb placeholder';
@@ -397,35 +449,40 @@
     }
   }
 
-  async function load() {
-    try {
-      const result = await window.storage.get(KEY, true);
-      items = result ? JSON.parse(result.value) : [];
-    } catch {
-      items = [];
-    }
+  // Live sync: both Diego and Andro see updates instantly, no manual reload needed.
+  itemsRef.on('value', (snapshot) => {
+    const val = snapshot.val();
+    items = val ? Object.values(val) : [];
+    bannerEl.style.display = 'none';
     render();
-  }
+  }, (err) => {
+    bannerEl.style.display = 'block';
+  });
 
-  async function save() {
+  async function persist() {
+    const obj = {};
+    for (const item of items) obj[item.id] = item;
     try {
-      const result = await window.storage.set(KEY, JSON.stringify(items), true);
-      if (!result) statusEl.textContent = 'No se pudo guardar. Intenta de nuevo.';
-    } catch {
-      statusEl.textContent = 'No se pudo guardar. Intenta de nuevo.';
+      await itemsRef.set(obj);
+      statusEl.classList.remove('error');
+      return true;
+    } catch (err) {
+      statusEl.textContent = 'No se pudo guardar. Revisa la conexión.';
+      statusEl.classList.add('error');
+      return false;
     }
   }
 
   async function toggleSeen(id) {
     items = items.map(i => i.id === id ? { ...i, seen: !i.seen } : i);
     render();
-    await save();
+    await persist();
   }
 
   async function removeItem(id) {
     items = items.filter(i => i.id !== id);
     render();
-    await save();
+    await persist();
   }
 
   form.addEventListener('submit', async (e) => {
@@ -434,6 +491,7 @@
     if (!url) return;
 
     submitBtn.disabled = true;
+    statusEl.classList.remove('error');
     statusEl.textContent = 'Buscando vista previa...';
 
     const preview = await fetchPreview(url);
@@ -455,13 +513,11 @@
     urlInput.value = '';
     noteInput.value = '';
     statusEl.textContent = 'Guardando...';
-    await save();
-    statusEl.textContent = '';
+    const ok = await persist();
+    if (ok) statusEl.textContent = '';
     submitBtn.disabled = false;
     urlInput.focus();
   });
-
-  load();
 </script>
 </body>
 </html>
