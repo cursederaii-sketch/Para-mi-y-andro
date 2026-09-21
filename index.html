@@ -160,6 +160,35 @@
   .editprev { display: block; width: 100%; max-height: 170px; object-fit: cover; border-radius: 16px; margin-top: 8px; }
   .row2 { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
   .row2.l { justify-content: flex-start; margin-top: 8px; }
+  textarea { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: 11px 14px; border-radius: 14px; font: inherit; font-size: 14px; resize: vertical; }
+  textarea:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-soft); }
+  textarea::placeholder { color: var(--muted); opacity: .85; }
+  .baulbtn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; background: var(--lav-soft); color: var(--lav); border: 0; border-radius: 999px; padding: 9px 18px; font: 600 13.5px Figtree, sans-serif; cursor: pointer; transition: filter .15s; }
+  .baulbtn:hover { filter: brightness(.96); }
+  #baulDlg { width: min(720px, calc(100% - 20px)); height: min(94vh, 940px); padding: 0; overflow: hidden; border: 1.5px solid var(--line); }
+  #baulDlg[open] { display: flex; flex-direction: column; }
+  .bhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 20px 20px 12px; border-bottom: 1.5px dashed var(--line); }
+  .bhead h2 { display: flex; align-items: center; gap: 10px; font-size: 28px; font-style: italic; }
+  .bsub { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
+  .bscroll { flex: 1; overflow: auto; padding: 16px 20px 26px; }
+  .bcomp { display: flex; flex-direction: column; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 22px; padding: 16px; margin: 14px 0 18px; }
+  .bgrid { column-count: 2; column-gap: 12px; margin-top: 6px; }
+  @media (max-width: 380px) { .bgrid { column-count: 1; } }
+  .bcard { break-inside: avoid; margin: 0 0 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; cursor: pointer; }
+  .bcard img { display: block; width: 100%; }
+  .bcard.tx { background: var(--rose-soft); border-color: transparent; }
+  .bbody2 { padding: 12px 14px; }
+  .bcard h3 { font: italic 400 18px/1.25 Fraunces, Georgia, serif; margin: 0 0 4px; overflow-wrap: anywhere; }
+  .btext { margin: 0; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .bcard.tx .btext { font: italic 16px/1.5 Fraunces, Georgia, serif; -webkit-line-clamp: 7; }
+  .bcard.open .btext { display: block; }
+  .bmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 8px; font-size: 11.5px; color: var(--muted); }
+  .bmeta .del { margin-left: auto; }
+  #pad { display: block; width: 100%; aspect-ratio: 1; border-radius: 16px; border: 1px solid var(--line); background: #FFFDF8; touch-action: none; cursor: crosshair; margin-top: 10px; }
+  .pal { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
+  .sw { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); padding: 0; cursor: pointer; }
+  .sw.on { outline: 2px solid var(--rose); outline-offset: 2px; }
+  #pSz { padding: 0; border: 0; background: none; accent-color: var(--rose); }
   .hint { margin: 0 0 4px; font-size: 12.5px; color: var(--muted); }
   .i.big { width: 30px; height: 30px; }
   .ip { font: 500 13.5px ui-monospace, Menlo, Consolas, monospace; background: var(--rose-soft); padding: 3px 9px; border-radius: 8px; word-break: break-all; user-select: all; }
@@ -183,6 +212,7 @@
   <path id="i-Peliculas" d="M4 5h16v14H4zM8 5v14M16 5v14M4 10h4M4 14h4M16 10h4M16 14h4"/>
   <path id="i-Series" d="M3 7h18v12H3zM8 3l4 4 4-4"/>
   <path id="i-Juegos" d="M6 9h12a3 3 0 0 1 3 3.5l-.7 3.6a2 2 0 0 1-3.4.9L15 15H9l-1.9 2a2 2 0 0 1-3.4-.9L3 12.5A3 3 0 0 1 6 9zM8 11v3M6.5 12.5h3M16 12h.01M18 13.5h.01"/>
+  <path id="i-box" d="M4 11a8 6 0 0 1 16 0M3 11h18v9H3zM12 14v3"/>
   <path id="cube" d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9"/>
 </defs></svg>
 
@@ -216,6 +246,7 @@
     <button type="button" class="since" id="sinceBtn"></button>
     <input type="date" id="sinceInput" aria-label="Fecha en que empezaron" hidden>
     <p class="count" id="countTxt"></p>
+    <button type="button" class="baulbtn" id="baulBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-box"/></svg>Nuestro baúl</button>
   </header>
 
   <div class="banner" id="storageBanner">
@@ -305,6 +336,67 @@
   <div class="row2">
     <button type="button" class="ghost" id="eCancel">Cancelar</button>
     <button type="button" class="btn" id="eSave">Guardar</button>
+  </div>
+</dialog>
+
+<dialog id="baulDlg" aria-label="Nuestro baúl">
+  <div class="bhead">
+    <div>
+      <h2><svg class="i" viewBox="0 0 24 24" style="width:26px;height:26px;color:var(--lav)" aria-hidden="true"><use href="#i-box"/></svg>Nuestro baúl</h2>
+      <p class="bsub">Dibujos, textos y cosas que nos hicimos.</p>
+    </div>
+    <button type="button" class="del" id="bClose">Cerrar</button>
+  </div>
+  <div class="bscroll">
+    <button type="button" class="btn" id="bAdd">+ Guardar algo</button>
+    <div class="bcomp" id="bComp" hidden>
+      <div class="chips" id="bType">
+        <button type="button" class="pill active" data-t="dibujo">Dibujo</button>
+        <button type="button" class="pill" data-t="texto">Texto</button>
+        <button type="button" class="pill" data-t="cosa">Cosa que nos hicimos</button>
+      </div>
+      <div class="chips" id="bWho">
+        <button type="button" class="pill active" data-who="Diego">De Diego</button>
+        <button type="button" class="pill" data-who="Andro">De Andro</button>
+      </div>
+      <input id="bTitle" type="text">
+      <textarea id="bText" rows="4"></textarea>
+      <img class="editprev" id="bPrev" alt="" hidden>
+      <div class="row2 l">
+        <button type="button" class="ghost" id="bDraw">Dibujar</button>
+        <button type="button" class="ghost" id="bUp">Subir foto</button>
+        <button type="button" class="del" id="bRm" hidden>Quitar imagen</button>
+      </div>
+      <input type="file" id="bFile" accept="image/*" hidden>
+      <div class="status" id="bStatus"></div>
+      <div class="row2">
+        <button type="button" class="ghost" id="bCancel">Cancelar</button>
+        <button type="button" class="btn" id="bSave">Guardar</button>
+      </div>
+    </div>
+    <nav class="tabs" id="bTabs" style="margin-top:18px">
+      <button type="button" class="on" data-f="all">Todo</button>
+      <button type="button" data-f="dibujo">Dibujos</button>
+      <button type="button" data-f="texto">Textos</button>
+      <button type="button" data-f="cosa">Cosas</button>
+    </nav>
+    <div class="bgrid" id="bGrid"></div>
+  </div>
+</dialog>
+
+<dialog id="padDlg" aria-label="Dibujar">
+  <h2>Dibujar</h2>
+  <canvas id="pad" width="640" height="640"></canvas>
+  <div class="pal" id="pal"></div>
+  <label class="lbl" for="pSz">Grosor</label>
+  <input type="range" id="pSz" min="3" max="40" value="8">
+  <div class="row2 l">
+    <button type="button" class="del" id="pUndo">Deshacer</button>
+    <button type="button" class="del" id="pClear">Borrar todo</button>
+  </div>
+  <div class="row2">
+    <button type="button" class="ghost" id="pCancel">Cancelar</button>
+    <button type="button" class="btn" id="pDone">Listo</button>
   </div>
 </dialog>
 
@@ -704,12 +796,12 @@
   let editing = null;
   let editImg = '';
 
-  function fileToDataUrl(file) {
+  function fileToDataUrl(file, max = 420) {
     return new Promise((res, rej) => {
       const img = new Image();
       const u = URL.createObjectURL(file);
       img.onload = () => {
-        const k = Math.min(1, 420 / Math.max(img.width, img.height));
+        const k = Math.min(1, max / Math.max(img.width, img.height));
         const cv = document.createElement('canvas');
         cv.width = Math.round(img.width * k);
         cv.height = Math.round(img.height * k);
@@ -767,6 +859,181 @@
     render();
     await persist();
   });
+
+  // --- Nuestro baúl ---
+  const baulRef = db.ref('paraVer/baul');
+  const baulDlg = $('baulDlg');
+  const padDlg = $('padDlg');
+  const BLABEL = { dibujo: 'Dibujo', texto: 'Texto', cosa: 'Cosa nuestra' };
+  const BHINT = {
+    dibujo: ['Nombre del dibujo (opcional)', 'Algo para acompañarlo (opcional)'],
+    texto: ['Título (opcional)', 'Escribí acá tu carta, poema o lo que quieras…'],
+    cosa: ['Qué es (ej: pulsera, playlist, video)', 'Contá cómo fue o para qué es']
+  };
+  let baul = [], baulOn = false, bFilter = 'all', bType = 'dibujo', bWho = 'Diego', bImg = '';
+
+  function bSync() {
+    [...$('bType').children].forEach(x => x.classList.toggle('active', x.dataset.t === bType));
+    [...$('bWho').children].forEach(x => x.classList.toggle('active', x.dataset.who === bWho));
+    $('bTitle').placeholder = BHINT[bType][0];
+    $('bText').placeholder = BHINT[bType][1];
+    $('bPrev').hidden = !bImg;
+    if (bImg) $('bPrev').src = bImg;
+    $('bRm').hidden = !bImg;
+  }
+  function bReset() {
+    $('bTitle').value = '';
+    $('bText').value = '';
+    $('bStatus').textContent = '';
+    bImg = '';
+    bSync();
+  }
+  function bCard(e) {
+    const c = el('article', 'bcard ' + (e.image ? 'im' : 'tx'));
+    if (e.image) {
+      const im = el('img');
+      im.src = e.image;
+      im.alt = e.title || 'Dibujo';
+      im.loading = 'lazy';
+      c.appendChild(im);
+    }
+    const b = el('div', 'bbody2');
+    if (e.title) b.appendChild(el('h3', null, e.title));
+    if (e.text) b.appendChild(el('p', 'btext', e.text));
+    const m = el('div', 'bmeta');
+    const del = el('button', 'del', 'Eliminar');
+    del.type = 'button';
+    del.onclick = (ev) => { ev.stopPropagation(); if (confirm('¿Eliminar esto del baúl?')) baulRef.child(e.id).remove(); };
+    m.append(
+      el('span', 'who ' + e.who, e.who),
+      el('span', null, BLABEL[e.type] || ''),
+      el('span', null, new Date(e.createdAt).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })),
+      del
+    );
+    b.appendChild(m);
+    c.appendChild(b);
+    c.onclick = () => c.classList.toggle('open');
+    return c;
+  }
+  function renderBaul() {
+    const g = $('bGrid');
+    g.innerHTML = '';
+    const list = baul.filter(e => bFilter === 'all' || e.type === bFilter).sort((a, b) => b.createdAt - a.createdAt);
+    if (!list.length) {
+      g.appendChild(emptyEl(baul.length ? 'No hay nada de este tipo todavía.' : 'Todavía no guardaron nada. Un dibujo, una carta o algo que se hicieron: sean los primeros.'));
+      return;
+    }
+    list.forEach(e => g.appendChild(bCard(e)));
+  }
+  function openBaul() {
+    bWho = currentWho;
+    bSync();
+    document.body.style.overflow = 'hidden';
+    baulDlg.showModal();
+    if (baulOn) { renderBaul(); return; }
+    baulOn = true;
+    baulRef.on('value', (s) => { baul = Object.values(s.val() || {}); renderBaul(); }, () => {
+      $('bGrid').innerHTML = '';
+      $('bGrid').appendChild(emptyEl('No se pudo leer el baúl. Puede que las reglas de Firebase no permitan leer paraVer/baul.'));
+    });
+  }
+  $('baulBtn').addEventListener('click', openBaul);
+  $('bClose').addEventListener('click', () => baulDlg.close());
+  baulDlg.addEventListener('close', () => { document.body.style.overflow = ''; });
+  baulDlg.addEventListener('click', (e) => { if (e.target === baulDlg) baulDlg.close(); });
+  $('bAdd').addEventListener('click', () => { $('bComp').hidden = !$('bComp').hidden; bSync(); });
+  $('bCancel').addEventListener('click', () => { bReset(); $('bComp').hidden = true; });
+  $('bType').addEventListener('click', (e) => { const b = e.target.closest('.pill'); if (b) { bType = b.dataset.t; bSync(); } });
+  $('bWho').addEventListener('click', (e) => { const b = e.target.closest('.pill'); if (b) { bWho = b.dataset.who; bSync(); } });
+  $('bTabs').addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    bFilter = b.dataset.f;
+    [...$('bTabs').children].forEach(x => x.classList.toggle('on', x === b));
+    renderBaul();
+  });
+  $('bUp').addEventListener('click', () => $('bFile').click());
+  $('bFile').addEventListener('change', async () => {
+    const f = $('bFile').files[0];
+    if (!f) return;
+    try { bImg = await fileToDataUrl(f, 720); bSync(); } catch {}
+    $('bFile').value = '';
+  });
+  $('bRm').addEventListener('click', () => { bImg = ''; bSync(); });
+  $('bSave').addEventListener('click', async () => {
+    const title = $('bTitle').value.trim();
+    const text = $('bText').value.trim();
+    const st = $('bStatus');
+    if (!title && !text && !bImg) {
+      st.textContent = 'Agregá un título, un texto o una imagen.';
+      st.classList.add('error');
+      return;
+    }
+    const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    st.classList.remove('error');
+    st.textContent = 'Guardando...';
+    $('bSave').disabled = true;
+    try {
+      await baulRef.child(id).set({ id, type: bType, who: bWho, title, text, image: bImg, createdAt: Date.now() });
+      bReset();
+      $('bComp').hidden = true;
+    } catch (err) {
+      st.textContent = 'No se pudo guardar. Revisá la conexión o las reglas de Firebase para paraVer/baul.';
+      st.classList.add('error');
+    }
+    $('bSave').disabled = false;
+  });
+
+  // --- Tablero de dibujo ---
+  const pad = $('pad');
+  const pctx = pad.getContext('2d');
+  const PAD_BG = '#FFFDF8';
+  const PAL = [['#3B2A35', 'Tinta'], ['#C94468', 'Rosa'], ['#7A6BC4', 'Lavanda'], ['#3E8E5B', 'Verde'], ['#E8A33D', 'Ámbar'], ['#4FA3D9', 'Celeste'], [PAD_BG, 'Goma']];
+  let pColor = PAL[0][0], drawing = false, last = null, undoStack = [];
+  PAL.forEach(([c, n], i) => {
+    const b = el('button', 'sw' + (i === 0 ? ' on' : ''));
+    b.type = 'button';
+    b.style.background = c;
+    b.setAttribute('aria-label', n);
+    b.onclick = () => { pColor = c; [...$('pal').children].forEach(x => x.classList.toggle('on', x === b)); };
+    $('pal').appendChild(b);
+  });
+  function padClear() { pctx.fillStyle = PAD_BG; pctx.fillRect(0, 0, pad.width, pad.height); }
+  function padPos(e) {
+    const r = pad.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * pad.width / r.width, y: (e.clientY - r.top) * pad.height / r.height };
+  }
+  function snap() { undoStack.push(pctx.getImageData(0, 0, pad.width, pad.height)); if (undoStack.length > 15) undoStack.shift(); }
+  pad.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    pad.setPointerCapture(e.pointerId);
+    snap();
+    drawing = true;
+    last = padPos(e);
+    pctx.fillStyle = pColor;
+    pctx.beginPath();
+    pctx.arc(last.x, last.y, $('pSz').value / 2, 0, Math.PI * 2);
+    pctx.fill();
+  });
+  pad.addEventListener('pointermove', (e) => {
+    if (!drawing) return;
+    const p = padPos(e);
+    pctx.strokeStyle = pColor;
+    pctx.lineWidth = Number($('pSz').value);
+    pctx.lineCap = 'round';
+    pctx.lineJoin = 'round';
+    pctx.beginPath();
+    pctx.moveTo(last.x, last.y);
+    pctx.lineTo(p.x, p.y);
+    pctx.stroke();
+    last = p;
+  });
+  ['pointerup', 'pointercancel'].forEach(ev => pad.addEventListener(ev, () => { drawing = false; }));
+  $('bDraw').addEventListener('click', () => { padClear(); undoStack = []; padDlg.showModal(); });
+  $('pUndo').addEventListener('click', () => { if (undoStack.length) pctx.putImageData(undoStack.pop(), 0, 0); });
+  $('pClear').addEventListener('click', () => { snap(); padClear(); });
+  $('pCancel').addEventListener('click', () => padDlg.close());
+  $('pDone').addEventListener('click', () => { bImg = pad.toDataURL('image/jpeg', .82); padDlg.close(); bSync(); });
 
   async function toggleSeen(id) {
     popId = id;
