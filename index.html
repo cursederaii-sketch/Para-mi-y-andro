@@ -22,13 +22,16 @@
     :root {
       --bg:#1B141A; --paper:#251B22; --ink:#F5E9EF; --muted:#A88F9C; --line:#3A2A33;
       --rose:#EE7A9A; --rose-soft:#3B2330; --lav:#A99BEA; --lav-soft:#2D2743;
-      --on-rose:#2A1520; --warn:#F08A7E; --cream:#EFE3D0;
+      --on-rose:#2A1520; --warn:#F08A7E; --cream:#D8CCB8;
     }
   }
   :root[data-theme="rosa"] { color-scheme: light; --bg:#FCF8F9; --paper:#fff; --ink:#3B2A35; --muted:#84707B; --line:#EBD9E0; --rose:#C94468; --rose-soft:#FBE7ED; --lav:#7A6BC4; --lav-soft:#ECE8F8; --on-rose:#fff; --warn:#B3443A; --cream:#FAF1E1; --fr1:#C94468; --fr2:#7A6BC4; --frline:#D9B8C0; --frdash:rgba(201,68,104,.55); }
   :root[data-theme="lavanda"] { color-scheme: light; --bg:#F8F6FD; --paper:#fff; --ink:#2E2848; --muted:#766F92; --line:#E2DCF3; --rose:#6A56C2; --rose-soft:#EAE5FA; --lav:#D1587F; --lav-soft:#FBE6EC; --on-rose:#fff; --warn:#B3443A; --cream:#F5F0FB; --fr1:#6A56C2; --fr2:#D1587F; --frline:#CFC6EA; --frdash:rgba(106,86,194,.55); }
   :root[data-theme="menta"] { color-scheme: light; --bg:#F4FAF7; --paper:#fff; --ink:#213A30; --muted:#66837A; --line:#D6EADF; --rose:#26805F; --rose-soft:#DFF2E8; --lav:#D9775A; --lav-soft:#FBE9E2; --on-rose:#fff; --warn:#B3443A; --cream:#F4F2E4; --fr1:#26805F; --fr2:#D9775A; --frline:#BCDACB; --frdash:rgba(38,128,95,.55); }
-  :root[data-theme="noche"] { color-scheme: dark; --bg:#15131F; --paper:#1F1C2D; --ink:#EDE9FA; --muted:#9F9AB8; --line:#302C45; --rose:#F08CB0; --rose-soft:#3A2540; --lav:#9BB0FF; --lav-soft:#262B4F; --on-rose:#2A1520; --warn:#F08A7E; --cream:#E9E3F3; --fr1:#B23A62; --fr2:#5B6BC0; --frline:#CDC4DD; --frdash:rgba(178,58,98,.5); }
+  :root[data-theme="noche"] { color-scheme: dark; --bg:#15131F; --paper:#1F1C2D; --ink:#EDE9FA; --muted:#9F9AB8; --line:#302C45; --rose:#F08CB0; --rose-soft:#3A2540; --lav:#9BB0FF; --lav-soft:#262B4F; --on-rose:#2A1520; --warn:#F08A7E; --cream:#CFC5DA; --fr1:#B23A62; --fr2:#5B6BC0; --frline:#CDC4DD; --frdash:rgba(178,58,98,.5); }
+  :root[data-theme="bosque"] { color-scheme: dark; --bg:#121A16; --paper:#1A2620; --ink:#E6F0E9; --muted:#93AA9C; --line:#2A3B32; --rose:#6FCF97; --rose-soft:#1F3A2C; --lav:#E8B36A; --lav-soft:#3A2F1B; --on-rose:#0E1F16; --warn:#F08A7E; --cream:#CBD3C4; --fr1:#2F7D57; --fr2:#B9782A; --frline:#AEBBA8; --frdash:rgba(47,125,87,.55); }
+  :root[data-theme="oceano"] { color-scheme: dark; --bg:#0F1720; --paper:#17222E; --ink:#E4EEF7; --muted:#8FA5B8; --line:#24364A; --rose:#5CC0E8; --rose-soft:#143247; --lav:#F2A5B5; --lav-soft:#3A2530; --on-rose:#08202C; --warn:#F08A7E; --cream:#C3CFD6; --fr1:#1F7FA8; --fr2:#C8586F; --frline:#A9B9C4; --frdash:rgba(31,127,168,.55); }
+  :root[data-theme="vino"] { color-scheme: dark; --bg:#1E1216; --paper:#291A22; --ink:#F5E6EB; --muted:#B08F9C; --line:#40262F; --rose:#E9B872; --rose-soft:#3A2A20; --lav:#E58AA0; --lav-soft:#40222C; --on-rose:#2A1A08; --warn:#F08A7E; --cream:#D5C3C7; --fr1:#A8641F; --fr2:#B23A5A; --frline:#BFA9AE; --frdash:rgba(168,100,31,.55); }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body {
@@ -190,7 +193,7 @@
   .bcard.open .btext { display: block; }
   .bmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 8px; font-size: 11.5px; color: var(--muted); }
   .bmeta .del { margin-left: auto; }
-  #pad { display: block; width: 100%; aspect-ratio: 1; border-radius: 16px; border: 1px solid var(--line); background: #FFFDF8; touch-action: none; cursor: crosshair; margin-top: 10px; }
+  #pad { display: block; width: 100%; aspect-ratio: 1; border-radius: 16px; border: 1px solid var(--line); background: #F5EFE3; touch-action: none; cursor: crosshair; margin-top: 10px; }
   .pal { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
   .sw { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); padding: 0; cursor: pointer; }
   .sw.on { outline: 2px solid var(--rose); outline-offset: 2px; }
@@ -202,7 +205,7 @@
   #imgDlg p:empty { display: none; }
   #imgDlg .ghost { margin-top: 10px; }
   :root[data-theme] .srv.up { color: #2F8A55; }
-  :root[data-theme="noche"] .srv.up { color: #6CCB93; }
+  :root[data-theme="noche"] .srv.up, :root[data-theme="bosque"] .srv.up, :root[data-theme="oceano"] .srv.up, :root[data-theme="vino"] .srv.up { color: #6CCB93; }
   .themes { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 14px; }
   .themes span { font: 12.5px Figtree, sans-serif; color: var(--muted); margin-right: 2px; }
   .tdot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); padding: 0; cursor: pointer; }
@@ -210,6 +213,13 @@
   .stk { width: 40px; height: 40px; font-size: 22px; line-height: 1; background: none; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
   .stk.on { border-color: var(--rose); background: var(--rose-soft); }
   #padDlg { width: min(460px, calc(100% - 24px)); }
+  .colw { display: flex; flex-direction: column; gap: 10px; }
+  .bcard.msg img { max-height: 260px; object-fit: cover; object-position: top; }
+  #imgDlg img { cursor: zoom-in; }
+  #imgDlg.z img { max-height: none; width: 100%; cursor: zoom-out; }
+  .strip { position: absolute; left: 0; bottom: 0; width: 100%; height: 110px; }
+  .backup { display: flex; justify-content: center; gap: 18px; margin: 0 0 4px; }
+  #bkMsg { margin: 0 0 12px; min-height: 18px; font: 12.5px Figtree, sans-serif; color: var(--muted); }
   .hint { margin: 0 0 4px; font-size: 12.5px; color: var(--muted); }
   .i.big { width: 30px; height: 30px; }
   .ip { font: 500 13.5px ui-monospace, Menlo, Consolas, monospace; background: var(--rose-soft); padding: 3px 9px; border-radius: 8px; word-break: break-all; user-select: all; }
@@ -228,6 +238,16 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <path id="heart" d="M50 86C22 64 6 47 6 29 6 16 16 7 28 7c9 0 17 5 22 14 5-9 13-14 22-14 12 0 22 9 22 22 0 18-16 35-44 57z"/>
   <path id="spark" d="M0-9C1-4 4-1 9 0 4 1 1 4 0 9-1 4-4 1-9 0-4-1-1-4 0-9z"/>
+  <g id="flower"><circle cx="0" cy="-4.8" r="3"/><circle cx="4.6" cy="-1.5" r="3"/><circle cx="2.8" cy="3.9" r="3"/><circle cx="-2.8" cy="3.9" r="3"/><circle cx="-4.6" cy="-1.5" r="3"/><circle r="1.3"/></g>
+  <path id="leaf" d="M0 9C-7 4-7-4 0-9 7-4 7 4 0 9zM0 9V-5"/>
+  <path id="moon" d="M3-9A9 9 0 1 0 9 3 7 7 0 0 1 3-9z"/>
+  <path id="star" d="M0-9L2.6-2.8 9.2-2.8 3.9 1.3 5.8 7.8 0 3.9-5.8 7.8-3.9 1.3-9.2-2.8-2.6-2.8z"/>
+  <path id="pine" d="M0-10L4-4H2L6 1H3.5L8 7H-8L-3.5 1H-6L-2-4H-4zM0 7V10"/>
+  <path id="butter" d="M0 0C-3-8-10-8-9-2-8 2-3 2 0 0 3 2 8 2 9-2 10-8 3-8 0 0zM0-3V5M0-3L-2-6M0-3L2-6"/>
+  <path id="fish" d="M-8 0C-4-5 3-5 6 0 3 5-4 5-8 0zM6 0L10-4V4zM-4-1h.01"/>
+  <path id="glass" d="M-4-9H4C4-3 2 1 0 1S-4-3-4-9zM0 1V8M-4 9H4M-3.6-5H3.6"/>
+  <path id="cloud" d="M-7 5H6a3.5 3.5 0 0 0 .5-7A5 5 0 0 0-3-3.5 4 4 0 0 0-7 5z"/>
+  <g id="bub"><circle r="7"/><path d="M-3-3A4.5 4.5 0 0 1 1-4.5"/></g>
   <path id="i-Anime" d="M12 3c.8 5 3 7.2 8 8-5 .8-7.2 3-8 8-.8-5-3-7.2-8-8 5-.8 7.2-3 8-8z"/>
   <path id="i-YouTube" d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM10 9.5v5l4.5-2.5z"/>
   <path id="i-Peliculas" d="M4 5h16v14H4zM8 5v14M16 5v14M4 10h4M4 14h4M16 10h4M16 14h4"/>
@@ -237,14 +257,7 @@
   <path id="cube" d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9"/>
 </defs></svg>
 
-<div class="doodles" aria-hidden="true">
-  <svg class="dd" viewBox="0 0 100 92" style="top:9%;left:-14px;width:64px;color:var(--rose);transform:rotate(-16deg)"><use href="#heart"/></svg>
-  <svg class="dd" viewBox="-10 -10 20 20" style="top:6%;right:7%;width:26px;color:var(--lav)"><use href="#spark"/></svg>
-  <svg class="dd" viewBox="0 0 100 92" style="top:38%;right:-10px;width:46px;color:var(--lav);transform:rotate(14deg)"><use href="#heart"/></svg>
-  <svg class="dd" viewBox="-10 -10 20 20" style="top:52%;left:3%;width:22px;color:var(--rose)"><use href="#spark"/></svg>
-  <svg class="dd" viewBox="0 0 100 92" style="bottom:8%;right:5%;width:54px;color:var(--rose);transform:rotate(10deg)"><use href="#heart"/></svg>
-  <svg class="dd" viewBox="-10 -10 20 20" style="bottom:14%;left:8%;width:30px;color:var(--lav)"><use href="#spark"/></svg>
-</div>
+<div class="doodles" id="scene" aria-hidden="true"></div>
 
 <div class="frame" aria-hidden="true">
   <svg class="fc" viewBox="0 0 100 92" style="top:-16px;left:-14px;stroke:var(--fr1);transform:rotate(-18deg)"><use href="#heart"/></svg>
@@ -329,6 +342,12 @@
       <path d="M10 62c30-14 90-14 120 0" stroke-dasharray="2 7" style="color:var(--muted)"/>
     </svg>
     <div class="themes" id="themes" role="group" aria-label="Paleta de colores"></div>
+    <div class="backup">
+      <button type="button" class="del" id="bkOut">Guardar copia</button>
+      <button type="button" class="del" id="bkIn">Cargar copia</button>
+      <input type="file" id="bkFile" accept="application/json,.json" hidden>
+    </div>
+    <p id="bkMsg" aria-live="polite"></p>
     Hecho con cariño para dos.
   </footer>
 </div>
@@ -379,10 +398,22 @@
         <button type="button" class="pill active" data-t="dibujo">Dibujo</button>
         <button type="button" class="pill" data-t="texto">Texto</button>
         <button type="button" class="pill" data-t="cosa">Cosa que nos hicimos</button>
+        <button type="button" class="pill" data-t="mensaje">Mensaje</button>
       </div>
       <div class="chips" id="bWho">
         <button type="button" class="pill active" data-who="Diego">De Diego</button>
         <button type="button" class="pill" data-who="Andro">De Andro</button>
+      </div>
+      <div class="colw" id="bMsg" hidden>
+        <div class="chips" id="bPlat">
+          <button type="button" class="pill active" data-p="whatsapp">WhatsApp</button>
+          <button type="button" class="pill" data-p="discord">Discord</button>
+          <button type="button" class="pill" data-p="twitter">Twitter/X</button>
+          <button type="button" class="pill" data-p="instagram">Instagram</button>
+          <button type="button" class="pill" data-p="otra">Otra red</button>
+        </div>
+        <label class="lbl" for="bDate" style="margin:0">Fecha del mensaje (opcional)</label>
+        <input type="date" id="bDate">
       </div>
       <input id="bTitle" type="text">
       <textarea id="bText" rows="4"></textarea>
@@ -399,11 +430,12 @@
         <button type="button" class="btn" id="bSave">Guardar</button>
       </div>
     </div>
-    <nav class="tabs" id="bTabs" style="margin-top:18px">
+    <nav class="tabs" id="bTabs" style="margin-top:18px;flex-wrap:wrap;gap:6px 16px">
       <button type="button" class="on" data-f="all">Todo</button>
       <button type="button" data-f="dibujo">Dibujos</button>
       <button type="button" data-f="texto">Textos</button>
       <button type="button" data-f="cosa">Cosas</button>
+      <button type="button" data-f="mensaje">Mensajes</button>
     </nav>
     <div class="bgrid" id="bGrid"></div>
   </div>
@@ -441,6 +473,7 @@
 <dialog id="imgDlg" aria-label="Imagen en grande">
   <img id="lbImg" alt="">
   <p id="lbCap"></p>
+  <p class="bsub" id="lbHint">Tocá la imagen para acercarla</p>
   <button type="button" class="ghost" id="lbClose">Cerrar</button>
 </dialog>
 
@@ -842,7 +875,7 @@
   let editing = null;
   let editImg = '';
 
-  function fileToDataUrl(file, max = 420) {
+  function fileToDataUrl(file, max = 420, q = .75) {
     return new Promise((res, rej) => {
       const img = new Image();
       const u = URL.createObjectURL(file);
@@ -853,7 +886,7 @@
         cv.height = Math.round(img.height * k);
         cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
         URL.revokeObjectURL(u);
-        res(cv.toDataURL('image/jpeg', .75));
+        res(cv.toDataURL('image/jpeg', q));
       };
       img.onerror = rej;
       img.src = u;
@@ -913,9 +946,10 @@
     $('lbImg').src = src;
     $('lbImg').alt = cap || '';
     $('lbCap').textContent = cap || '';
+    imgDlg.classList.remove('z');
     imgDlg.showModal();
   }
-  imgDlg.addEventListener('click', () => imgDlg.close());
+  imgDlg.addEventListener('click', (e) => { if (e.target === $('lbImg')) imgDlg.classList.toggle('z'); else imgDlg.close(); });
   $('lbClose').addEventListener('click', () => imgDlg.close());
   $('ePrev').addEventListener('click', () => showImg($('ePrev').src, ''));
   $('bPrev').addEventListener('click', () => showImg($('bPrev').src, ''));
@@ -924,13 +958,15 @@
   const baulRef = db.ref('paraVer/baul');
   const baulDlg = $('baulDlg');
   const padDlg = $('padDlg');
-  const BLABEL = { dibujo: 'Dibujo', texto: 'Texto', cosa: 'Cosa nuestra' };
+  const BLABEL = { dibujo: 'Dibujo', texto: 'Texto', cosa: 'Cosa nuestra', mensaje: 'Mensaje' };
+  const PLAT = { whatsapp: 'WhatsApp', discord: 'Discord', twitter: 'Twitter/X', instagram: 'Instagram', otra: 'otra red' };
   const BHINT = {
     dibujo: ['Nombre del dibujo (opcional)', 'Algo para acompañarlo (opcional)'],
     texto: ['Título (opcional)', 'Escribí acá tu carta, poema o lo que quieras…'],
-    cosa: ['Qué es (ej: pulsera, playlist, video)', 'Contá cómo fue o para qué es']
+    cosa: ['Qué es (ej: pulsera, playlist, video)', 'Contá cómo fue o para qué es'],
+    mensaje: ['Título (opcional, ej: mi jugador)', 'Lo que dice el mensaje (opcional, se lee más fácil)']
   };
-  let baul = [], baulOn = false, bFilter = 'all', bType = 'dibujo', bWho = 'Diego', bImg = '';
+  let baul = [], baulOn = false, bFilter = 'all', bType = 'dibujo', bWho = 'Diego', bImg = '', bPlat = 'whatsapp';
 
   function bSync() {
     [...$('bType').children].forEach(x => x.classList.toggle('active', x.dataset.t === bType));
@@ -940,16 +976,21 @@
     $('bPrev').hidden = !bImg;
     if (bImg) $('bPrev').src = bImg;
     $('bRm').hidden = !bImg;
+    $('bMsg').hidden = bType !== 'mensaje';
+    $('bDraw').hidden = bType === 'mensaje';
+    $('bUp').textContent = bType === 'mensaje' ? 'Subir captura' : 'Subir foto';
+    [...$('bPlat').children].forEach(x => x.classList.toggle('active', x.dataset.p === bPlat));
   }
   function bReset() {
     $('bTitle').value = '';
     $('bText').value = '';
     $('bStatus').textContent = '';
+    $('bDate').value = '';
     bImg = '';
     bSync();
   }
   function bCard(e) {
-    const c = el('article', 'bcard ' + (e.image ? 'im' : 'tx'));
+    const c = el('article', 'bcard ' + (e.image ? 'im' : 'tx') + (e.type === 'mensaje' ? ' msg' : ''));
     if (e.image) {
       const im = el('img');
       im.src = e.image;
@@ -968,8 +1009,8 @@
     del.onclick = (ev) => { ev.stopPropagation(); if (confirm('¿Eliminar esto del baúl?')) baulRef.child(e.id).remove(); };
     m.append(
       el('span', 'who ' + e.who, e.who),
-      el('span', null, BLABEL[e.type] || ''),
-      el('span', null, new Date(e.createdAt).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })),
+      el('span', null, e.type === 'mensaje' ? 'Mensaje · ' + (PLAT[e.plat] || 'otra red') : (BLABEL[e.type] || '')),
+      el('span', null, new Date(e.msgDate ? e.msgDate + 'T00:00:00' : e.createdAt).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })),
       del
     );
     b.appendChild(m);
@@ -1007,6 +1048,7 @@
   $('bCancel').addEventListener('click', () => { bReset(); $('bComp').hidden = true; });
   $('bType').addEventListener('click', (e) => { const b = e.target.closest('.pill'); if (b) { bType = b.dataset.t; bSync(); } });
   $('bWho').addEventListener('click', (e) => { const b = e.target.closest('.pill'); if (b) { bWho = b.dataset.who; bSync(); } });
+  $('bPlat').addEventListener('click', (e) => { const b = e.target.closest('.pill'); if (b) { bPlat = b.dataset.p; bSync(); } });
   $('bTabs').addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b) return;
@@ -1018,7 +1060,7 @@
   $('bFile').addEventListener('change', async () => {
     const f = $('bFile').files[0];
     if (!f) return;
-    try { bImg = await fileToDataUrl(f, 720); bSync(); } catch {}
+    try { bImg = bType === 'mensaje' ? await fileToDataUrl(f, 1200, .8) : await fileToDataUrl(f, 720); bSync(); } catch {}
     $('bFile').value = '';
   });
   $('bRm').addEventListener('click', () => { bImg = ''; bSync(); });
@@ -1036,7 +1078,7 @@
     st.textContent = 'Guardando...';
     $('bSave').disabled = true;
     try {
-      await baulRef.child(id).set({ id, type: bType, who: bWho, title, text, image: bImg, createdAt: Date.now() });
+      await baulRef.child(id).set({ id, type: bType, who: bWho, title, text, image: bImg, plat: bType === 'mensaje' ? bPlat : '', msgDate: bType === 'mensaje' ? $('bDate').value : '', createdAt: Date.now() });
       bReset();
       $('bComp').hidden = true;
     } catch (err) {
@@ -1046,13 +1088,72 @@
     $('bSave').disabled = false;
   });
 
+  // --- Fondos dibujados, uno por paleta ---
+  const U = (id, x, y, k = 1, r = 0, sw = 1.6) => {
+    const hk = id === 'heart' ? .19 : 1;
+    return `<use href="#${id}" stroke-width="${(sw / (k * hk)).toFixed(2)}" transform="translate(${x} ${y}) rotate(${r}) scale(${k * hk})${id === 'heart' ? ' translate(-50 -46)' : ''}"/>`;
+  };
+  const dot = (x, y, r = 1.2) => `<circle cx="${x}" cy="${y}" r="${r}" fill="currentColor" stroke="none"/>`;
+  function stalk(x, h, kind) {
+    let g = `<path d="M${x} 110C${x - 2} ${110 - h / 2} ${x + 2} ${110 - h / 2} ${x} ${110 - h}"/>`;
+    for (let i = 0; i < 6; i++) {
+      const y = 110 - h + 5 + i * (h - 12) / 6;
+      if (kind === 'lav') g += `<ellipse cx="${x - 3}" cy="${y}" rx="1.7" ry="3.3" transform="rotate(-20 ${x - 3} ${y})"/><ellipse cx="${x + 3}" cy="${y + 3}" rx="1.7" ry="3.3" transform="rotate(20 ${x + 3} ${y + 3})"/>`;
+      else g += U('leaf', x + (i % 2 ? 5 : -5), y + 4, .5, i % 2 ? 55 : -55);
+    }
+    return g;
+  }
+  const wave = y => `<path d="M0 ${y}Q25 ${y - 16} 50 ${y}T100 ${y}T150 ${y}T200 ${y}"/>`;
+  const SCENES = {
+    rosa: {
+      tile: '<path d="M30 110V80M120 110V88M175 110V92"/>' + U('flower', 30, 72, 1.1) + U('flower', 120, 80, .9, 15) + U('heart', 175, 84, .9) + U('leaf', 38, 98, .5, 60) + U('leaf', 112, 102, .45, -60) + U('spark', 82, 92, .5),
+      m: [['heart', 'top:9%;left:-14px', 64, -16, 'rose'], ['spark', 'top:6%;right:7%', 26, 0, 'lav'], ['heart', 'top:38%;right:-10px', 46, 14, 'lav'], ['flower', 'top:52%;left:3%', 34, 0, 'rose'], ['spark', 'top:26%;left:46%', 18, 0, 'lav']]
+    },
+    lavanda: {
+      tile: stalk(35, 72, 'lav') + stalk(78, 54, 'lav') + stalk(140, 80, 'lav') + stalk(176, 58, 'lav') + U('butter', 108, 50, .9, -10) + U('spark', 60, 30, .4),
+      m: [['butter', 'top:10%;left:2%', 44, -12, 'rose'], ['moon', 'top:7%;right:6%', 36, 10, 'lav'], ['star', 'top:36%;right:2%', 22, 0, 'rose'], ['butter', 'top:54%;right:4%', 34, 18, 'lav'], ['star', 'top:48%;left:4%', 18, 0, 'lav']]
+    },
+    menta: {
+      tile: stalk(40, 74, 'leaf') + stalk(105, 54, 'leaf') + stalk(160, 78, 'leaf') + U('spark', 80, 40, .45) + dot(130, 42) + dot(20, 52),
+      m: [['leaf', 'top:9%;left:-6px', 52, -30, 'rose'], ['leaf', 'top:6%;right:6%', 38, 40, 'lav'], ['flower', 'top:38%;right:-4px', 40, 0, 'rose'], ['spark', 'top:52%;left:4%', 22, 0, 'lav'], ['leaf', 'top:60%;right:10%', 30, -50, 'rose']]
+    },
+    noche: {
+      tile: '<path d="M0 100Q50 74 100 96T200 100"/><path d="M0 108Q60 90 120 106T200 108"/>' + U('star', 36, 46, .5) + U('star', 150, 36, .4) + U('spark', 96, 62, .5) + U('moon', 180, 60, .6) + dot(70, 30) + dot(120, 50) + dot(10, 70),
+      m: [['moon', 'top:6%;right:8%', 54, 8, 'rose'], ['star', 'top:12%;left:6%', 24, 0, 'lav'], ['star', 'top:32%;right:4%', 18, 0, 'lav'], ['cloud', 'top:44%;left:-8px', 60, 0, 'rose'], ['spark', 'top:56%;right:10%', 20, 0, 'lav']]
+    },
+    bosque: {
+      tile: '<path d="M0 108H200"/>' + U('pine', 28, 86, 1.5) + U('pine', 72, 92, 1) + U('pine', 128, 82, 1.7) + U('pine', 176, 94, .95) + dot(52, 58, 1.5) + dot(100, 44, 1.5) + dot(152, 54, 1.5) + dot(14, 40),
+      m: [['pine', 'top:10%;left:2%', 44, 0, 'rose'], ['moon', 'top:6%;right:7%', 40, 0, 'lav'], ['leaf', 'top:38%;right:-6px', 36, 30, 'rose'], ['spark', 'top:50%;left:5%', 18, 0, 'lav'], ['pine', 'top:56%;right:4%', 34, 0, 'lav']]
+    },
+    oceano: {
+      tile: wave(74) + wave(92) + wave(108) + '<circle cx="40" cy="48" r="3"/><circle cx="52" cy="36" r="1.8"/><circle cx="150" cy="52" r="2.6"/>' + U('fish', 108, 54, .8),
+      m: [['fish', 'top:10%;left:2%', 54, -8, 'rose'], ['fish', 'top:34%;right:2%', 44, 'scaleX(-1)', 'lav'], ['bub', 'top:8%;right:8%', 30, 0, 'lav'], ['bub', 'top:50%;left:4%', 22, 0, 'rose'], ['star', 'top:58%;right:8%', 26, 0, 'rose']]
+    },
+    vino: {
+      tile: '<path d="M0 92C30 72 60 112 100 92S170 72 200 92"/>' + U('leaf', 30, 80, .6, -40) + U('leaf', 75, 100, .6, 140) + U('leaf', 130, 84, .6, 40) + U('leaf', 170, 100, .6, -140) + '<circle cx="98" cy="98" r="3"/><circle cx="104" cy="98" r="3"/><circle cx="101" cy="103" r="3"/>' + U('spark', 150, 44, .5) + U('heart', 40, 56, .7),
+      m: [['glass', 'top:9%;left:4%', 44, -10, 'rose'], ['heart', 'top:7%;right:8%', 40, 12, 'lav'], ['spark', 'top:34%;right:4%', 24, 0, 'rose'], ['leaf', 'top:50%;left:2%', 40, -30, 'lav'], ['spark', 'top:58%;right:10%', 18, 0, 'rose']]
+    }
+  };
+  function drawScene() {
+    const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+    const sc = SCENES[theme === 'auto' ? (dark ? 'noche' : 'rosa') : theme];
+    $('scene').innerHTML =
+      `<svg class="strip" width="100%" height="110" aria-hidden="true"><defs><pattern id="pt" width="200" height="110" patternUnits="userSpaceOnUse" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--rose)">${sc.tile}</pattern></defs><rect width="100%" height="110" fill="url(#pt)"/></svg>` +
+      sc.m.map(([id, pos, size, r, c]) =>
+        `<svg class="dd" viewBox="-10 -10 20 20" style="${pos};width:${size}px;height:${size}px;color:var(--${c});transform:${typeof r === 'string' ? r : 'rotate(' + r + 'deg)'}">${U(id, 0, 0, 1, 0, 1.4 / (size / 20))}</svg>`).join('');
+  }
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (theme === 'auto') drawScene(); });
+
   // --- Paletas ---
   const THEMES = [
     ['auto', 'Automática', 'linear-gradient(135deg,#FCF8F9 50%,#15131F 50%)'],
     ['rosa', 'Rosa', 'linear-gradient(135deg,#C94468 50%,#FCF8F9 50%)'],
     ['lavanda', 'Lavanda', 'linear-gradient(135deg,#6A56C2 50%,#F8F6FD 50%)'],
     ['menta', 'Menta', 'linear-gradient(135deg,#26805F 50%,#F4FAF7 50%)'],
-    ['noche', 'Noche', 'linear-gradient(135deg,#F08CB0 50%,#15131F 50%)']
+    ['noche', 'Noche', 'linear-gradient(135deg,#F08CB0 50%,#15131F 50%)'],
+    ['bosque', 'Bosque', 'linear-gradient(135deg,#6FCF97 50%,#121A16 50%)'],
+    ['oceano', 'Océano', 'linear-gradient(135deg,#5CC0E8 50%,#0F1720 50%)'],
+    ['vino', 'Vino', 'linear-gradient(135deg,#E9B872 50%,#1E1216 50%)']
   ];
   let theme = 'auto';
   try { theme = localStorage.getItem('theme') || 'auto'; } catch {}
@@ -1060,6 +1161,7 @@
     if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
     else document.documentElement.dataset.theme = theme;
     [...$('themes').querySelectorAll('.tdot')].forEach(b => b.classList.toggle('on', b.dataset.t === theme));
+    drawScene();
   }
   $('themes').appendChild(el('span', null, 'Paleta'));
   THEMES.forEach(([id, name, bg]) => {
@@ -1074,6 +1176,44 @@
   });
   applyTheme();
 
+  // --- Copia de seguridad ---
+  const bkMsg = $('bkMsg');
+  $('bkOut').addEventListener('click', async () => {
+    try {
+      const [b, sn] = await Promise.all([baulRef.once('value'), sinceRef.once('value')]);
+      const data = { app: 'para-ver', version: 1, exportedAt: new Date().toISOString(), items, baul: Object.values(b.val() || {}), since: sn.val() || since || null };
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'para-ver-copia-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
+      bkMsg.textContent = `Copia guardada: ${items.length} de la lista y ${data.baul.length} del baúl.`;
+    } catch { bkMsg.textContent = 'No se pudo armar la copia. Revisá la conexión.'; }
+  });
+  $('bkIn').addEventListener('click', () => $('bkFile').click());
+  $('bkFile').addEventListener('change', async () => {
+    const f = $('bkFile').files[0];
+    $('bkFile').value = '';
+    if (!f) return;
+    try {
+      const d = JSON.parse(await f.text());
+      if (d.app !== 'para-ver' || !Array.isArray(d.items) || !Array.isArray(d.baul)) throw new Error('formato');
+      const have = new Set(items.map(i => i.id));
+      const newItems = d.items.filter(i => i && i.id && i.url && !have.has(i.id));
+      const cur = (await baulRef.once('value')).val() || {};
+      const newBaul = d.baul.filter(e => e && e.id && !cur[e.id]);
+      if (!newItems.length && !newBaul.length) { bkMsg.textContent = 'Esa copia no trae nada nuevo: ya está todo.'; return; }
+      if (!confirm(`Se van a sumar ${newItems.length} de la lista y ${newBaul.length} del baúl. Lo que ya existe no se toca. ¿Seguimos?`)) return;
+      if (newItems.length) { items = [...items, ...newItems]; render(); await persist(); }
+      for (const e of newBaul) await baulRef.child(e.id).set(e);
+      if (d.since && !since) { since = d.since; sinceRef.set(since).catch(() => {}); try { localStorage.setItem('since', since); } catch {} renderSince(); }
+      bkMsg.textContent = `Listo: se sumaron ${newItems.length} de la lista y ${newBaul.length} del baúl.`;
+    } catch { bkMsg.textContent = 'No se pudo leer esa copia. Tiene que ser un archivo guardado desde acá.'; }
+  });
+
   // --- Tablero de dibujo (solo y juntos en tiempo real) ---
   const pad = $('pad');
   const pctx = pad.getContext('2d');
@@ -1081,7 +1221,7 @@
   layer.width = pad.width;
   layer.height = pad.height;
   const lctx = layer.getContext('2d');
-  const PAD_BG = '#FFFDF8';
+  const PAD_BG = '#F5EFE3';
   const PAL = [['#3B2A35', 'Tinta'], ['#C94468', 'Rosa'], ['#7A6BC4', 'Lavanda'], ['#3E8E5B', 'Verde'], ['#E8A33D', 'Ámbar'], ['#4FA3D9', 'Celeste']];
   const STK = ['💗', '⭐', '✨', '🌸', '🌙', '🎀', '🍀', '🔥'];
   const CLIENT = Math.random().toString(36).slice(2, 9);
