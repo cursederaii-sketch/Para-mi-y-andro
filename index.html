@@ -86,7 +86,7 @@
   .status.error { color: var(--warn); }
 
   /* Filtros y listas */
-  .tabs { display: flex; gap: 18px; justify-content: center; margin: 0 0 26px; }
+  .tabs { display: flex; gap: 18px; justify-content: center; margin: 0 0 16px; }
   .tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 4px 2px; color: var(--muted); font: 500 14px Figtree, sans-serif; cursor: pointer; }
   .tabs button.on { color: var(--ink); border-color: var(--rose); }
   .section { margin-bottom: 34px; }
@@ -96,7 +96,7 @@
 
   .item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1.5px dashed var(--line); }
   .item:last-child { border-bottom: 0; }
-  .item.seen { opacity: .5; }
+  .item.seen .thumb, .item.seen .title, .item.seen .desc { opacity: .5; }
   .thumb { width: 72px; height: 72px; border-radius: 18px; background: var(--rose-soft); flex: none; object-fit: cover; display: block; }
   .thumb.ph { display: flex; align-items: center; justify-content: center; color: var(--rose); font-size: 11px; text-align: center; padding: 4px; word-break: break-all; }
   .content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -130,6 +130,36 @@
   .frame::after { content: ""; position: absolute; inset: 5px; border: 1px dashed rgba(201,68,104,.55); border-radius: 21px; }
   .fc { position: absolute; width: 26px; height: 24px; fill: var(--cream); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
   @media (min-width: 640px) { .frame { inset: 18px; } }
+  .count { margin: 2px 0 0; font: italic 14px Fraunces, Georgia, serif; color: var(--muted); }
+  .rate { display: flex; gap: 2px; margin: 0 0 5px; }
+  .rate button { background: none; border: 0; padding: 1px; line-height: 0; cursor: pointer; color: var(--muted); }
+  .rate svg { width: 15px; height: 14px; fill: none; stroke: currentColor; stroke-width: 6; stroke-linejoin: round; }
+  .rate .on { color: var(--rose); }
+  .rate .on svg { fill: currentColor; }
+  .srv { color: var(--muted); }
+  .srv.up { color: #2F8A55; }
+  @media (prefers-color-scheme: dark) { .srv.up { color: #6CCB93; } }
+  select { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: 11px 14px; border-radius: 14px; font: inherit; font-size: 14px; }
+  select:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-soft); }
+  .tools { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 0 0 24px; }
+  .dur { color: var(--muted); }
+  .sub2 { margin: 14px 0 0; font: italic 15px Fraunces, Georgia, serif; color: var(--rose); }
+  .conv { margin: 0 0 5px; font-size: 12px; color: var(--muted); }
+  .mini { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .list.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 16px 14px; padding-top: 10px; }
+  .gal .item { flex-direction: column; gap: 8px; padding: 0; border: 0; }
+  .gal .thumb { width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  .gal .desc { display: none; }
+  .gal .actions { flex-direction: row; align-items: center; justify-content: space-between; }
+  .gal .mini { flex-direction: row; gap: 10px; }
+  .ph.clk { cursor: pointer; }
+  dialog { border: 0; border-radius: 24px; padding: 20px; background: var(--paper); color: var(--ink); width: min(420px, calc(100% - 32px)); box-shadow: 0 20px 60px rgba(40,20,30,.3); }
+  dialog::backdrop { background: rgba(40,20,30,.45); }
+  dialog h2 { font-size: 24px; font-style: italic; margin-bottom: 4px; }
+  .lbl { display: block; margin: 12px 0 5px; font-size: 12.5px; color: var(--muted); }
+  .editprev { display: block; width: 100%; max-height: 170px; object-fit: cover; border-radius: 16px; margin-top: 8px; }
+  .row2 { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+  .row2.l { justify-content: flex-start; margin-top: 8px; }
   .hint { margin: 0 0 4px; font-size: 12.5px; color: var(--muted); }
   .i.big { width: 30px; height: 30px; }
   .ip { font: 500 13.5px ui-monospace, Menlo, Consolas, monospace; background: var(--rose-soft); padding: 3px 9px; border-radius: 8px; word-break: break-all; user-select: all; }
@@ -185,6 +215,7 @@
     <p class="sub">Lista compartida de Diego <svg class="i" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg> Andro</p>
     <button type="button" class="since" id="sinceBtn"></button>
     <input type="date" id="sinceInput" aria-label="Fecha en que empezaron" hidden>
+    <p class="count" id="countTxt"></p>
   </header>
 
   <div class="banner" id="storageBanner">
@@ -212,6 +243,7 @@
     </div>
     <input id="url" type="text" placeholder="Pegá el enlace acá" required>
     <input id="noteInput" type="text" placeholder="Nota (opcional)">
+    <select id="durInput" aria-label="Duración"></select>
     <button type="submit" class="btn" id="submitBtn">Agregar</button>
     <div class="status" id="status"></div>
   </form>
@@ -221,6 +253,19 @@
     <button type="button" data-f="todo">Por ver</button>
     <button type="button" data-f="seen">Vistas</button>
   </nav>
+
+  <div class="tools">
+    <div class="chips" id="timeSel">
+      <button type="button" class="pill active" data-m="0">Cualquier rato</button>
+      <button type="button" class="pill" data-m="30">Hasta 30 min</button>
+      <button type="button" class="pill" data-m="60">Hasta 1 h</button>
+      <button type="button" class="pill" data-m="120">Hasta 2 h</button>
+    </div>
+    <div class="chips" id="viewSel">
+      <button type="button" class="pill active" data-v="list">Lista</button>
+      <button type="button" class="pill" data-v="gal">Galería</button>
+    </div>
+  </div>
 
   <div id="sections"></div>
 
@@ -234,6 +279,34 @@
     Hecho con cariño para dos.
   </footer>
 </div>
+
+<dialog id="editDlg" aria-label="Editar ítem">
+  <h2>Editar</h2>
+  <div id="eText" hidden>
+    <label class="lbl" for="eTextIn">IP o coordenadas</label>
+    <input id="eTextIn" type="text">
+  </div>
+  <div id="eLink">
+    <label class="lbl" for="eTitle">Título</label>
+    <input id="eTitle" type="text">
+    <label class="lbl" for="eDur">Duración</label>
+    <select id="eDur"></select>
+    <label class="lbl" for="eImg">Banner (link de una imagen)</label>
+    <input id="eImg" type="text" placeholder="https://…">
+    <img class="editprev" id="ePrev" alt="" hidden>
+    <div class="row2 l">
+      <button type="button" class="ghost" id="eUpload">Subir foto</button>
+      <button type="button" class="del" id="eClear">Quitar banner</button>
+    </div>
+    <input type="file" id="eFile" accept="image/*" hidden>
+  </div>
+  <label class="lbl" for="eNote">Nota</label>
+  <input id="eNote" type="text">
+  <div class="row2">
+    <button type="button" class="ghost" id="eCancel">Cancelar</button>
+    <button type="button" class="btn" id="eSave">Guardar</button>
+  </div>
+</dialog>
 
 <script>
   // --- Firebase setup ---
@@ -259,6 +332,9 @@
   let currentCat = 'Anime';
   let currentFilter = 'all';
   let popId = null;
+  let maxMin = 0;
+  let view = 'list';
+  try { view = localStorage.getItem('view') || 'list'; } catch {}
 
   const sectionsEl = $('sections');
   const statusEl = $('status');
@@ -273,7 +349,9 @@
   const fixUrl = s => /^https?:\/\//i.test(s) ? s : 'https://' + s;
   catSelect.addEventListener('click', (e) => {
     const b = e.target.closest('.pill');
-    if (b) urlInput.placeholder = b.dataset.cat === 'Juegos' ? 'Link de Roblox, IP del server, etc.' : 'Pegá el enlace acá';
+    if (!b) return;
+    urlInput.placeholder = b.dataset.cat === 'Juegos' ? 'Link de Roblox, IP del server o coordenadas' : 'Pegá el enlace acá';
+    durInput.hidden = b.dataset.cat === 'Juegos';
   });
 
   // --- Días juntos (se guarda en la base y, de respaldo, en el navegador) ---
@@ -289,6 +367,25 @@
       : d === 0 ? 'Juntos desde hoy' : 'Poné la fecha en que empezaron';
     sinceBtn.hidden = false;
     sinceInput.hidden = true;
+    renderCount(d);
+  }
+  function renderCount(d) {
+    const out = $('countTxt');
+    if (!(d >= 0)) { out.textContent = ''; return; }
+    const [y, m, dd] = since.split('-').map(Number);
+    const at = n => { const t = new Date(y, m - 1 + n, dd); return t.getDate() === dd ? t : new Date(y, m + n, 0); };
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let n = 1;
+    while (at(n) < today) n++;
+    const left = Math.round((at(n) - today) / 864e5);
+    const ann = n % 12 === 0;
+    if (left === 0) {
+      out.textContent = ann ? `¡Hoy es su aniversario número ${n / 12}!` : n === 1 ? '¡Hoy cumplen su primer mes!' : `¡Hoy cumplen ${n} meses!`;
+      return;
+    }
+    const what = ann ? `su aniversario número ${n / 12}` : n === 1 ? 'su primer mes juntos' : `sus ${n} meses`;
+    out.textContent = `${left === 1 ? 'Falta 1 día' : 'Faltan ' + left + ' días'} para ${what}`;
   }
   sinceBtn.addEventListener('click', () => {
     sinceBtn.hidden = true;
@@ -309,6 +406,40 @@
     renderSince();
   }, renderSince);
 
+  // --- Duración, vista y tiempo disponible ---
+  const COORD_RE = /^\s*-?\d+([\s,]+-?\d+){1,2}\s*$/;
+  const DURS = [10, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180, 240];
+  const fmtDur = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' h' + (m % 60 ? ' ' + (m % 60) : '');
+  function fillDur(sel, first) {
+    sel.innerHTML = '';
+    for (const m of [0, ...DURS]) {
+      const o = document.createElement('option');
+      o.value = m;
+      o.textContent = m ? fmtDur(m) : first;
+      sel.appendChild(o);
+    }
+  }
+  const durInput = $('durInput');
+  fillDur(durInput, 'Duración (opcional)');
+  fillDur($('eDur'), 'Sin duración');
+  function syncView() { [...$('viewSel').children].forEach(x => x.classList.toggle('active', x.dataset.v === view)); }
+  syncView();
+  $('timeSel').addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (!b) return;
+    maxMin = Number(b.dataset.m);
+    [...$('timeSel').children].forEach(x => x.classList.toggle('active', x === b));
+    render();
+  });
+  $('viewSel').addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (!b) return;
+    view = b.dataset.v;
+    try { localStorage.setItem('view', view); } catch {}
+    syncView();
+    render();
+  });
+
   // --- Filtros ---
   $('filters').addEventListener('click', (e) => {
     const b = e.target.closest('button');
@@ -320,7 +451,7 @@
 
   // --- Elegir algo para hoy ---
   $('pickBtn').addEventListener('click', () => {
-    const pool = items.filter(i => !i.seen && !i.isText);
+    const pool = items.filter(i => !i.seen && !i.isText && (!maxMin || (i.duration && i.duration <= maxMin)));
     const out = $('pick');
     out.textContent = '';
     if (!pool.length) {
@@ -411,6 +542,17 @@
     }
   }
 
+  const srvCache = {};
+  function srvStatus(host, node) {
+    const show = d => {
+      const up = !!(d && d.online);
+      node.textContent = up ? '● en línea' + (d.players ? ' · ' + d.players.online + '/' + d.players.max : '') : '○ sin respuesta';
+      node.classList.toggle('up', up);
+    };
+    if (!(host in srvCache)) srvCache[host] = fetch('https://api.mcsrvstat.us/3/' + encodeURIComponent(host)).then(r => r.json()).catch(() => null);
+    srvCache[host].then(show);
+  }
+
   function emptyEl(msg) {
     const e = el('div', 'empty');
     e.innerHTML = HEART;
@@ -429,9 +571,16 @@
       thumb.src = item.image;
       thumb.alt = '';
       thumb.loading = 'lazy';
-      thumb.onerror = () => { thumb.style.display = 'none'; };
+      thumb.onerror = () => {
+        const ph = el('div', 'thumb ph clk', domainOf(item.url));
+        ph.title = 'Agregar banner';
+        ph.onclick = () => openEdit(item);
+        thumb.replaceWith(ph);
+      };
     } else {
-      thumb = el('div', 'thumb ph', domainOf(item.url));
+      thumb = el('div', 'thumb ph clk', domainOf(item.url));
+      thumb.title = 'Agregar banner';
+      thumb.onclick = () => openEdit(item);
     }
 
     const c = el('div', 'content');
@@ -442,13 +591,37 @@
     a.rel = 'noopener noreferrer';
     if (item.isText) t.appendChild(el('code', 'ip', item.url)); else t.appendChild(a);
     c.appendChild(t);
+    if (item.coords) {
+      const nums = item.url.trim().split(/[\s,]+/).map(Number);
+      const nether = /nether/i.test(item.note || '');
+      const conv = nums.map((n, i) => (nums.length === 3 && i === 1) ? n : (nether ? n * 8 : Math.floor(n / 8)));
+      c.appendChild(el('p', 'conv', (nether ? 'En el Overworld: ' : 'En el Nether: ') + conv.join(' ')));
+    }
     if (item.description) c.appendChild(el('p', 'desc', item.description));
     if (item.note) c.appendChild(el('p', 'note', item.note));
+    if (item.seen && !item.isText) {
+      const rt = el('div', 'rate');
+      for (let n = 1; n <= 5; n++) {
+        const b = el('button', n <= (item.rating || 0) ? 'on' : '');
+        b.type = 'button';
+        b.setAttribute('aria-label', n + ' de 5 corazones');
+        b.innerHTML = HEART;
+        b.onclick = () => setRating(item.id, n === item.rating ? 0 : n);
+        rt.appendChild(b);
+      }
+      c.appendChild(rt);
+    }
     const m = el('div', 'meta');
     m.append(
       el('span', 'who ' + item.addedBy, item.addedBy),
       el('span', null, new Date(item.addedAt).toLocaleDateString('es', { day: 'numeric', month: 'short' }))
     );
+    if (item.duration) m.appendChild(el('span', 'dur', fmtDur(item.duration)));
+    if (item.isText && !item.coords) {
+      const st = el('span', 'srv', 'revisando…');
+      m.appendChild(st);
+      srvStatus(item.url, st);
+    }
     c.appendChild(m);
 
     const act = el('div', 'actions');
@@ -461,6 +634,11 @@
     const del = el('button', 'del', 'Eliminar');
     del.type = 'button';
     del.onclick = () => { if (confirm('¿Eliminar este ítem?')) removeItem(item.id); };
+    const ed = el('button', 'del', 'Editar');
+    ed.type = 'button';
+    ed.onclick = () => openEdit(item);
+    const mini = el('div', 'mini');
+    mini.append(ed, del);
     if (item.isText) {
       const cp = el('button', 'del cp', 'Copiar');
       cp.type = 'button';
@@ -470,8 +648,8 @@
           setTimeout(() => { cp.textContent = 'Copiar'; }, 1500);
         }).catch(() => {});
       };
-      act.append(cp, del);
-    } else act.append(chk, del);
+      act.append(cp, mini);
+    } else act.append(chk, mini);
 
     r.append(thumb, c, act);
     return r;
@@ -489,25 +667,106 @@
       let list = items.filter(i => i.category === cat).sort((a, b) => b.addedAt - a.addedAt);
       if (currentFilter === 'todo') list = list.filter(i => !i.seen);
       if (currentFilter === 'seen') list = list.filter(i => i.seen);
-      if (!list.length && currentFilter !== 'all') continue;
+      if (maxMin) list = list.filter(i => i.duration && i.duration <= maxMin);
+      if (!list.length && (currentFilter !== 'all' || maxMin)) continue;
 
       const section = el('div', 'section');
       const head = el('div', 'sh');
       head.innerHTML = `<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-${cat}"/></svg>`;
       head.append(el('h2', null, CAT_LABELS[cat]), el('span', 'ct', list.length));
       section.appendChild(head);
-      if (cat === 'Juegos') section.appendChild(el('p', 'hint', 'Links de Roblox, IP de servers de Minecraft y lo que se les ocurra.'));
+      if (cat === 'Juegos') section.appendChild(el('p', 'hint', 'Links de Roblox, IP de servers y coordenadas de Minecraft (ej: 120 64 -300).'));
       if (!list.length) section.appendChild(emptyEl('Nada guardado todavía. Pegá un enlace arriba para sumar el primero.'));
-      for (const item of list) section.appendChild(row(item));
+      const addBox = arr => {
+        if (!arr.length) return;
+        const box = el('div', 'list' + (view === 'gal' ? ' gal' : ''));
+        arr.forEach(i => box.appendChild(row(i)));
+        section.appendChild(box);
+      };
+      if (cat === 'Juegos') {
+        addBox(list.filter(i => !i.isText));
+        const srv = list.filter(i => i.isText && !i.coords);
+        const cd = list.filter(i => i.coords);
+        if (srv.length) { section.appendChild(el('p', 'sub2', 'Servers')); addBox(srv); }
+        if (cd.length) { section.appendChild(el('p', 'sub2', 'Cuaderno de Minecraft')); addBox(cd); }
+      } else addBox(list);
       sectionsEl.appendChild(section);
     }
     if (!sectionsEl.children.length) {
-      sectionsEl.appendChild(emptyEl(currentFilter === 'seen'
+      sectionsEl.appendChild(emptyEl(maxMin ? 'Nada de lo guardado entra en ese tiempo.' : currentFilter === 'seen'
         ? 'Todavía no marcaron nada como visto.'
         : 'No queda nada por ver. ¡Sumen algo nuevo!'));
     }
     popId = null;
   }
+
+  const dlg = $('editDlg');
+  let editing = null;
+  let editImg = '';
+
+  function fileToDataUrl(file) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      const u = URL.createObjectURL(file);
+      img.onload = () => {
+        const k = Math.min(1, 420 / Math.max(img.width, img.height));
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(img.width * k);
+        cv.height = Math.round(img.height * k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(u);
+        res(cv.toDataURL('image/jpeg', .75));
+      };
+      img.onerror = rej;
+      img.src = u;
+    });
+  }
+  function syncPrev() {
+    $('ePrev').hidden = !editImg;
+    if (editImg) $('ePrev').src = editImg;
+    $('eImg').placeholder = editImg.startsWith('data:') ? 'Foto subida desde tu dispositivo' : 'https://…';
+  }
+  function openEdit(item) {
+    editing = item;
+    editImg = item.image || '';
+    $('eText').hidden = !item.isText;
+    $('eLink').hidden = !!item.isText;
+    $('eTextIn').value = item.isText ? item.url : '';
+    $('eTitle').value = item.title || '';
+    $('eDur').value = String(item.duration || 0);
+    $('eImg').value = editImg.startsWith('data:') ? '' : editImg;
+    $('eNote').value = item.note || '';
+    syncPrev();
+    dlg.showModal();
+  }
+  $('eImg').addEventListener('input', () => { editImg = $('eImg').value.trim(); syncPrev(); });
+  $('eClear').addEventListener('click', () => { editImg = ''; $('eImg').value = ''; syncPrev(); });
+  $('eUpload').addEventListener('click', () => $('eFile').click());
+  $('eFile').addEventListener('change', async () => {
+    const f = $('eFile').files[0];
+    if (!f) return;
+    try { editImg = await fileToDataUrl(f); $('eImg').value = ''; syncPrev(); } catch {}
+    $('eFile').value = '';
+  });
+  $('eCancel').addEventListener('click', () => dlg.close());
+  $('eSave').addEventListener('click', async () => {
+    const id = editing.id;
+    const patch = { note: $('eNote').value.trim() };
+    if (editing.isText) {
+      const t = $('eTextIn').value.trim();
+      if (!t) return;
+      patch.url = t;
+      patch.coords = COORD_RE.test(t);
+    } else {
+      patch.title = $('eTitle').value.trim();
+      patch.duration = Number($('eDur').value) || 0;
+      patch.image = editImg;
+    }
+    items = items.map(i => i.id === id ? { ...i, ...patch } : i);
+    dlg.close();
+    render();
+    await persist();
+  });
 
   async function toggleSeen(id) {
     popId = id;
@@ -515,6 +774,12 @@
     render();
     const pb = document.querySelector('.item.seen .pop');
     if (pb) burst(pb);
+    await persist();
+  }
+
+  async function setRating(id, n) {
+    items = items.map(i => i.id === id ? { ...i, rating: n } : i);
+    render();
     await persist();
   }
 
@@ -564,6 +829,8 @@
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
       url: asText ? url : fixUrl(url),
       isText: asText,
+      coords: asText && COORD_RE.test(url),
+      duration: asText ? 0 : Number(durInput.value) || 0,
       title: preview.title,
       description: preview.description,
       image: preview.image,
@@ -577,6 +844,7 @@
     render();
     urlInput.value = '';
     noteInput.value = '';
+    durInput.value = '0';
     statusEl.textContent = 'Guardando...';
     const ok = await persist();
     if (ok) statusEl.textContent = '';
