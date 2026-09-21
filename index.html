@@ -10,11 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>try{var t=localStorage.getItem('theme');if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
   :root {
     --bg:#FCF8F9; --paper:#fff; --ink:#3B2A35; --muted:#84707B; --line:#EBD9E0;
     --rose:#C94468; --rose-soft:#FBE7ED; --lav:#7A6BC4; --lav-soft:#ECE8F8;
     --on-rose:#fff; --warn:#B3443A; --cream:#FAF1E1; color-scheme: light dark;
+    --fr1:#C94468; --fr2:#7A6BC4; --frline:#D9B8C0; --frdash:rgba(201,68,104,.55);
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -23,6 +25,10 @@
       --on-rose:#2A1520; --warn:#F08A7E; --cream:#EFE3D0;
     }
   }
+  :root[data-theme="rosa"] { color-scheme: light; --bg:#FCF8F9; --paper:#fff; --ink:#3B2A35; --muted:#84707B; --line:#EBD9E0; --rose:#C94468; --rose-soft:#FBE7ED; --lav:#7A6BC4; --lav-soft:#ECE8F8; --on-rose:#fff; --warn:#B3443A; --cream:#FAF1E1; --fr1:#C94468; --fr2:#7A6BC4; --frline:#D9B8C0; --frdash:rgba(201,68,104,.55); }
+  :root[data-theme="lavanda"] { color-scheme: light; --bg:#F8F6FD; --paper:#fff; --ink:#2E2848; --muted:#766F92; --line:#E2DCF3; --rose:#6A56C2; --rose-soft:#EAE5FA; --lav:#D1587F; --lav-soft:#FBE6EC; --on-rose:#fff; --warn:#B3443A; --cream:#F5F0FB; --fr1:#6A56C2; --fr2:#D1587F; --frline:#CFC6EA; --frdash:rgba(106,86,194,.55); }
+  :root[data-theme="menta"] { color-scheme: light; --bg:#F4FAF7; --paper:#fff; --ink:#213A30; --muted:#66837A; --line:#D6EADF; --rose:#26805F; --rose-soft:#DFF2E8; --lav:#D9775A; --lav-soft:#FBE9E2; --on-rose:#fff; --warn:#B3443A; --cream:#F4F2E4; --fr1:#26805F; --fr2:#D9775A; --frline:#BCDACB; --frdash:rgba(38,128,95,.55); }
+  :root[data-theme="noche"] { color-scheme: dark; --bg:#15131F; --paper:#1F1C2D; --ink:#EDE9FA; --muted:#9F9AB8; --line:#302C45; --rose:#F08CB0; --rose-soft:#3A2540; --lav:#9BB0FF; --lav-soft:#262B4F; --on-rose:#2A1520; --warn:#F08A7E; --cream:#E9E3F3; --fr1:#B23A62; --fr2:#5B6BC0; --frline:#CDC4DD; --frdash:rgba(178,58,98,.5); }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body {
@@ -126,8 +132,8 @@
   .foot { text-align: center; margin-top: 20px; color: var(--muted); font: italic 15px Fraunces, Georgia, serif; }
   .foot svg { display: block; margin: 0 auto 8px; width: 110px; height: 54px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
-  .frame { position: fixed; inset: 10px; z-index: 5; pointer-events: none; border-radius: 26px; border: 1.5px solid #D9B8C0; box-shadow: 0 0 0 60px var(--cream); }
-  .frame::after { content: ""; position: absolute; inset: 5px; border: 1px dashed rgba(201,68,104,.55); border-radius: 21px; }
+  .frame { position: fixed; inset: 10px; z-index: 5; pointer-events: none; border-radius: 26px; border: 1.5px solid var(--frline); box-shadow: 0 0 0 60px var(--cream); }
+  .frame::after { content: ""; position: absolute; inset: 5px; border: 1px dashed var(--frdash); border-radius: 21px; }
   .fc { position: absolute; width: 26px; height: 24px; fill: var(--cream); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
   @media (min-width: 640px) { .frame { inset: 18px; } }
   .count { margin: 2px 0 0; font: italic 14px Fraunces, Georgia, serif; color: var(--muted); }
@@ -195,6 +201,15 @@
   #imgDlg p { margin: 10px 0 2px; font: italic 15px Fraunces, Georgia, serif; }
   #imgDlg p:empty { display: none; }
   #imgDlg .ghost { margin-top: 10px; }
+  :root[data-theme] .srv.up { color: #2F8A55; }
+  :root[data-theme="noche"] .srv.up { color: #6CCB93; }
+  .themes { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 14px; }
+  .themes span { font: 12.5px Figtree, sans-serif; color: var(--muted); margin-right: 2px; }
+  .tdot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); padding: 0; cursor: pointer; }
+  .tdot.on { outline: 2px solid var(--rose); outline-offset: 2px; }
+  .stk { width: 40px; height: 40px; font-size: 22px; line-height: 1; background: none; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+  .stk.on { border-color: var(--rose); background: var(--rose-soft); }
+  #padDlg { width: min(460px, calc(100% - 24px)); }
   .hint { margin: 0 0 4px; font-size: 12.5px; color: var(--muted); }
   .i.big { width: 30px; height: 30px; }
   .ip { font: 500 13.5px ui-monospace, Menlo, Consolas, monospace; background: var(--rose-soft); padding: 3px 9px; border-radius: 8px; word-break: break-all; user-select: all; }
@@ -232,10 +247,10 @@
 </div>
 
 <div class="frame" aria-hidden="true">
-  <svg class="fc" viewBox="0 0 100 92" style="top:-16px;left:-14px;stroke:#C94468;transform:rotate(-18deg)"><use href="#heart"/></svg>
-  <svg class="fc" viewBox="-10 -10 20 20" style="top:-14px;right:-13px;width:24px;height:24px;stroke:#7A6BC4;stroke-width:1.5"><use href="#spark"/></svg>
-  <svg class="fc" viewBox="-10 -10 20 20" style="bottom:-14px;left:-13px;width:24px;height:24px;stroke:#7A6BC4;stroke-width:1.5"><use href="#spark"/></svg>
-  <svg class="fc" viewBox="0 0 100 92" style="bottom:-16px;right:-14px;stroke:#C94468;transform:rotate(16deg)"><use href="#heart"/></svg>
+  <svg class="fc" viewBox="0 0 100 92" style="top:-16px;left:-14px;stroke:var(--fr1);transform:rotate(-18deg)"><use href="#heart"/></svg>
+  <svg class="fc" viewBox="-10 -10 20 20" style="top:-14px;right:-13px;width:24px;height:24px;stroke:var(--fr2);stroke-width:1.5"><use href="#spark"/></svg>
+  <svg class="fc" viewBox="-10 -10 20 20" style="bottom:-14px;left:-13px;width:24px;height:24px;stroke:var(--fr2);stroke-width:1.5"><use href="#spark"/></svg>
+  <svg class="fc" viewBox="0 0 100 92" style="bottom:-16px;right:-14px;stroke:var(--fr1);transform:rotate(16deg)"><use href="#heart"/></svg>
 </div>
 
 <div class="wrap">
@@ -313,6 +328,7 @@
       <g style="color:var(--rose)"><use href="#spark" transform="translate(64 50) scale(.6)"/></g>
       <path d="M10 62c30-14 90-14 120 0" stroke-dasharray="2 7" style="color:var(--muted)"/>
     </svg>
+    <div class="themes" id="themes" role="group" aria-label="Paleta de colores"></div>
     Hecho con cariño para dos.
   </footer>
 </div>
@@ -354,7 +370,10 @@
     <button type="button" class="del" id="bClose">Cerrar</button>
   </div>
   <div class="bscroll">
-    <button type="button" class="btn" id="bAdd">+ Guardar algo</button>
+    <div class="row2 l" style="margin-top:0">
+      <button type="button" class="btn" id="bAdd">+ Guardar algo</button>
+      <button type="button" class="ghost" id="bLive">Dibujar juntos</button>
+    </div>
     <div class="bcomp" id="bComp" hidden>
       <div class="chips" id="bType">
         <button type="button" class="pill active" data-t="dibujo">Dibujo</button>
@@ -391,14 +410,27 @@
 </dialog>
 
 <dialog id="padDlg" aria-label="Dibujar">
-  <h2>Dibujar</h2>
+  <h2 id="padTitle">Dibujar</h2>
+  <p class="bsub" id="padLive" hidden></p>
+  <div class="chips" id="padWho" style="margin-top:8px" hidden>
+    <button type="button" class="pill" data-who="Diego">Soy Diego</button>
+    <button type="button" class="pill" data-who="Andro">Soy Andro</button>
+  </div>
   <canvas id="pad" width="640" height="640"></canvas>
+  <div class="chips" id="padTools" style="margin-top:12px">
+    <button type="button" class="pill active" data-tool="brush">Pincel</button>
+    <button type="button" class="pill" data-tool="eraser">Goma</button>
+    <button type="button" class="pill" data-tool="sticker">Stickers</button>
+  </div>
   <div class="pal" id="pal"></div>
-  <label class="lbl" for="pSz">Grosor</label>
+  <div class="pal" id="stk" hidden></div>
+  <label class="lbl" for="pSz">Tamaño</label>
   <input type="range" id="pSz" min="3" max="40" value="8">
   <div class="row2 l">
     <button type="button" class="del" id="pUndo">Deshacer</button>
     <button type="button" class="del" id="pClear">Borrar todo</button>
+    <button type="button" class="del" id="pPhoto">Foto de fondo</button>
+    <input type="file" id="pFile" accept="image/*" hidden>
   </div>
   <div class="row2">
     <button type="button" class="ghost" id="pCancel">Cancelar</button>
@@ -1014,12 +1046,52 @@
     $('bSave').disabled = false;
   });
 
-  // --- Tablero de dibujo ---
+  // --- Paletas ---
+  const THEMES = [
+    ['auto', 'Automática', 'linear-gradient(135deg,#FCF8F9 50%,#15131F 50%)'],
+    ['rosa', 'Rosa', 'linear-gradient(135deg,#C94468 50%,#FCF8F9 50%)'],
+    ['lavanda', 'Lavanda', 'linear-gradient(135deg,#6A56C2 50%,#F8F6FD 50%)'],
+    ['menta', 'Menta', 'linear-gradient(135deg,#26805F 50%,#F4FAF7 50%)'],
+    ['noche', 'Noche', 'linear-gradient(135deg,#F08CB0 50%,#15131F 50%)']
+  ];
+  let theme = 'auto';
+  try { theme = localStorage.getItem('theme') || 'auto'; } catch {}
+  function applyTheme() {
+    if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.dataset.theme = theme;
+    [...$('themes').querySelectorAll('.tdot')].forEach(b => b.classList.toggle('on', b.dataset.t === theme));
+  }
+  $('themes').appendChild(el('span', null, 'Paleta'));
+  THEMES.forEach(([id, name, bg]) => {
+    const b = el('button', 'tdot');
+    b.type = 'button';
+    b.dataset.t = id;
+    b.title = name;
+    b.setAttribute('aria-label', 'Paleta ' + name);
+    b.style.background = bg;
+    b.onclick = () => { theme = id; try { localStorage.setItem('theme', id); } catch {} applyTheme(); };
+    $('themes').appendChild(b);
+  });
+  applyTheme();
+
+  // --- Tablero de dibujo (solo y juntos en tiempo real) ---
   const pad = $('pad');
   const pctx = pad.getContext('2d');
+  const layer = document.createElement('canvas');
+  layer.width = pad.width;
+  layer.height = pad.height;
+  const lctx = layer.getContext('2d');
   const PAD_BG = '#FFFDF8';
-  const PAL = [['#3B2A35', 'Tinta'], ['#C94468', 'Rosa'], ['#7A6BC4', 'Lavanda'], ['#3E8E5B', 'Verde'], ['#E8A33D', 'Ámbar'], ['#4FA3D9', 'Celeste'], [PAD_BG, 'Goma']];
-  let pColor = PAL[0][0], drawing = false, last = null, undoStack = [];
+  const PAL = [['#3B2A35', 'Tinta'], ['#C94468', 'Rosa'], ['#7A6BC4', 'Lavanda'], ['#3E8E5B', 'Verde'], ['#E8A33D', 'Ámbar'], ['#4FA3D9', 'Celeste']];
+  const STK = ['💗', '⭐', '✨', '🌸', '🌙', '🎀', '🍀', '🔥'];
+  const CLIENT = Math.random().toString(36).slice(2, 9);
+  const strokesRef = db.ref('paraVer/live/strokes');
+  const presRef = db.ref('paraVer/live/presence');
+  let pTool = 'brush', pColor = PAL[0][0], pSticker = STK[0];
+  let padStrokes = [], padBase = null, padLive = false, cur = null, lastSend = 0, localSeq = 0;
+  let presTimer = null, presCb = null, repT = null, srvOff = 0;
+  db.ref('.info/serverTimeOffset').on('value', (s) => { srvOff = s.val() || 0; });
+
   PAL.forEach(([c, n], i) => {
     const b = el('button', 'sw' + (i === 0 ? ' on' : ''));
     b.type = 'button';
@@ -1028,42 +1100,226 @@
     b.onclick = () => { pColor = c; [...$('pal').children].forEach(x => x.classList.toggle('on', x === b)); };
     $('pal').appendChild(b);
   });
-  function padClear() { pctx.fillStyle = PAD_BG; pctx.fillRect(0, 0, pad.width, pad.height); }
+  STK.forEach((e, i) => {
+    const b = el('button', 'stk' + (i === 0 ? ' on' : ''), e);
+    b.type = 'button';
+    b.onclick = () => { pSticker = e; [...$('stk').children].forEach(x => x.classList.toggle('on', x === b)); };
+    $('stk').appendChild(b);
+  });
+  $('padTools').addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (!b) return;
+    pTool = b.dataset.tool;
+    [...$('padTools').children].forEach(x => x.classList.toggle('active', x === b));
+    $('pal').hidden = pTool !== 'brush';
+    $('stk').hidden = pTool !== 'sticker';
+  });
+
+  const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+
+  function padPaint() {
+    pctx.fillStyle = PAD_BG;
+    pctx.fillRect(0, 0, pad.width, pad.height);
+    if (padBase) {
+      const k = Math.min(pad.width / padBase.naturalWidth, pad.height / padBase.naturalHeight);
+      const w = padBase.naturalWidth * k, h = padBase.naturalHeight * k;
+      pctx.drawImage(padBase, (pad.width - w) / 2, (pad.height - h) / 2, w, h);
+    }
+    pctx.drawImage(layer, 0, 0);
+  }
+  function paintStroke(s, from) {
+    lctx.save();
+    lctx.globalCompositeOperation = s.t === 'e' ? 'destination-out' : 'source-over';
+    if (s.t === 's') {
+      if (from === 0) {
+        lctx.font = s.z + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+        lctx.textAlign = 'center';
+        lctx.textBaseline = 'middle';
+        lctx.fillText(s.e, s.p[0], s.p[1]);
+      }
+    } else {
+      lctx.strokeStyle = s.c;
+      lctx.fillStyle = s.c;
+      lctx.lineWidth = s.z;
+      lctx.lineCap = 'round';
+      lctx.lineJoin = 'round';
+      if (from === 0) {
+        lctx.beginPath();
+        lctx.arc(s.p[0], s.p[1], s.z / 2, 0, Math.PI * 2);
+        lctx.fill();
+      }
+      lctx.beginPath();
+      for (let i = Math.max(from, 1); i < s.p.length / 2; i++) {
+        lctx.moveTo(s.p[2 * i - 2], s.p[2 * i - 1]);
+        lctx.lineTo(s.p[2 * i], s.p[2 * i + 1]);
+      }
+      lctx.stroke();
+    }
+    lctx.restore();
+  }
+  function padRepaint() {
+    lctx.clearRect(0, 0, layer.width, layer.height);
+    if (padLive) padStrokes.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    padStrokes.forEach(s => { paintStroke(s, 0); s.n = s.p.length / 2; });
+    padPaint();
+  }
   function padPos(e) {
     const r = pad.getBoundingClientRect();
-    return { x: (e.clientX - r.left) * pad.width / r.width, y: (e.clientY - r.top) * pad.height / r.height };
+    return { x: Math.round((e.clientX - r.left) * pad.width / r.width), y: Math.round((e.clientY - r.top) * pad.height / r.height) };
   }
-  function snap() { undoStack.push(pctx.getImageData(0, 0, pad.width, pad.height)); if (undoStack.length > 15) undoStack.shift(); }
+  function sendStroke(s) {
+    strokesRef.child(s.id).set({ t: s.t, c: s.c || '', z: s.z, e: s.e || '', p: s.p, cl: CLIENT, who: currentWho }).catch(() => {});
+  }
+
   pad.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     pad.setPointerCapture(e.pointerId);
-    snap();
-    drawing = true;
-    last = padPos(e);
-    pctx.fillStyle = pColor;
-    pctx.beginPath();
-    pctx.arc(last.x, last.y, $('pSz').value / 2, 0, Math.PI * 2);
-    pctx.fill();
+    const pt = padPos(e);
+    const z = Number($('pSz').value);
+    const s = pTool === 'sticker'
+      ? { t: 's', z: z * 3 + 24, e: pSticker, c: '', p: [pt.x, pt.y] }
+      : { t: pTool === 'eraser' ? 'e' : 'b', z, c: pTool === 'eraser' ? '#000' : pColor, e: '', p: [pt.x, pt.y] };
+    s.id = padLive ? strokesRef.push().key : 's' + (++localSeq);
+    s.cl = CLIENT;
+    padStrokes.push(s);
+    paintStroke(s, 0);
+    s.n = 1;
+    padPaint();
+    if (padLive) sendStroke(s);
+    cur = pTool === 'sticker' ? null : s;
   });
   pad.addEventListener('pointermove', (e) => {
-    if (!drawing) return;
-    const p = padPos(e);
-    pctx.strokeStyle = pColor;
-    pctx.lineWidth = Number($('pSz').value);
-    pctx.lineCap = 'round';
-    pctx.lineJoin = 'round';
-    pctx.beginPath();
-    pctx.moveTo(last.x, last.y);
-    pctx.lineTo(p.x, p.y);
-    pctx.stroke();
-    last = p;
+    if (!cur) return;
+    const pt = padPos(e);
+    const n = cur.p.length;
+    if (Math.hypot(pt.x - cur.p[n - 2], pt.y - cur.p[n - 1]) < 2) return;
+    cur.p.push(pt.x, pt.y);
+    paintStroke(cur, cur.n);
+    cur.n = cur.p.length / 2;
+    padPaint();
+    if (padLive && Date.now() - lastSend > 70) { lastSend = Date.now(); sendStroke(cur); }
   });
-  ['pointerup', 'pointercancel'].forEach(ev => pad.addEventListener(ev, () => { drawing = false; }));
-  $('bDraw').addEventListener('click', () => { padClear(); undoStack = []; padDlg.showModal(); });
-  $('pUndo').addEventListener('click', () => { if (undoStack.length) pctx.putImageData(undoStack.pop(), 0, 0); });
-  $('pClear').addEventListener('click', () => { snap(); padClear(); });
+  const padEnd = () => { if (cur && padLive) sendStroke(cur); cur = null; };
+  ['pointerup', 'pointercancel'].forEach(ev => pad.addEventListener(ev, padEnd));
+
+  // Tiempo real: trazos del otro
+  function onAdd(snap) {
+    const v = snap.val();
+    if (!v || !v.p || padStrokes.some(x => x.id === snap.key)) return;
+    const st = { ...v, id: snap.key };
+    padStrokes.push(st);
+    paintStroke(st, 0);
+    st.n = st.p.length / 2;
+    padPaint();
+  }
+  function onChg(snap) {
+    const v = snap.val();
+    const st = padStrokes.find(x => x.id === snap.key);
+    if (!st || !v || st.cl === CLIENT) return;
+    st.p = v.p;
+    paintStroke(st, st.n);
+    st.n = st.p.length / 2;
+    padPaint();
+  }
+  function onRem(snap) {
+    padStrokes = padStrokes.filter(x => x.id !== snap.key);
+    clearTimeout(repT);
+    repT = setTimeout(padRepaint, 40);
+  }
+  function syncWho() { [...$('padWho').children].forEach(x => x.classList.toggle('active', x.dataset.who === currentWho)); }
+  function startLive() {
+    strokesRef.on('child_added', onAdd, () => {
+      $('padLive').textContent = 'No se pudo conectar. Puede que las reglas de Firebase no permitan usar paraVer/live.';
+    });
+    strokesRef.on('child_changed', onChg);
+    strokesRef.on('child_removed', onRem);
+    const mine = presRef.child(CLIENT);
+    const beat = () => mine.set({ who: currentWho, t: firebase.database.ServerValue.TIMESTAMP }).catch(() => {});
+    beat();
+    mine.onDisconnect().remove();
+    presTimer = setInterval(beat, 10000);
+    presCb = presRef.on('value', (s) => {
+      const now = Date.now() + srvOff;
+      const others = Object.entries(s.val() || {}).filter(([k, v]) => k !== CLIENT && v && now - v.t < 40000).map(([, v]) => v.who);
+      $('padLive').textContent = others.length
+        ? others.join(' y ') + (others.length > 1 ? ' están' : ' está') + ' dibujando con vos'
+        : 'Esperando a que se sume la otra persona…';
+    });
+    syncWho();
+  }
+  function stopLive() {
+    strokesRef.off('child_added', onAdd);
+    strokesRef.off('child_changed', onChg);
+    strokesRef.off('child_removed', onRem);
+    if (presCb) presRef.off('value', presCb);
+    clearInterval(presTimer);
+    presRef.child(CLIENT).remove().catch(() => {});
+  }
+  padDlg.addEventListener('close', () => { if (padLive) { stopLive(); padLive = false; } });
+
+  async function openPad(live) {
+    padLive = live;
+    padStrokes = [];
+    padBase = null;
+    cur = null;
+    if (!live && bImg) { try { padBase = await loadImg(bImg); } catch {} }
+    lctx.clearRect(0, 0, layer.width, layer.height);
+    padPaint();
+    $('padTitle').textContent = live ? 'Dibujar juntos' : 'Dibujar';
+    $('padLive').hidden = !live;
+    $('padWho').hidden = !live;
+    $('pPhoto').hidden = live;
+    $('pDone').textContent = live ? 'Guardar en el baúl' : 'Listo';
+    $('pCancel').textContent = live ? 'Salir' : 'Cancelar';
+    padDlg.showModal();
+    if (live) startLive();
+  }
+  $('bDraw').addEventListener('click', () => openPad(false));
+  $('bLive').addEventListener('click', () => openPad(true));
+  $('padWho').addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (!b) return;
+    currentWho = b.dataset.who;
+    [...whoSelect.children].forEach(x => x.classList.toggle('active', x.dataset.who === currentWho));
+    syncWho();
+    if (padLive) presRef.child(CLIENT).update({ who: currentWho }).catch(() => {});
+  });
+  $('pUndo').addEventListener('click', () => {
+    if (padLive) {
+      const mine = [...padStrokes].reverse().find(s => s.cl === CLIENT);
+      if (!mine) return;
+      strokesRef.child(mine.id).remove().catch(() => {});
+      padStrokes = padStrokes.filter(s => s !== mine);
+    } else padStrokes.pop();
+    padRepaint();
+  });
+  $('pClear').addEventListener('click', () => {
+    if (padLive) {
+      if (!confirm('¿Borrar el lienzo para los dos?')) return;
+      strokesRef.remove().catch(() => {});
+    }
+    padStrokes = [];
+    padBase = null;
+    padRepaint();
+  });
+  $('pPhoto').addEventListener('click', () => $('pFile').click());
+  $('pFile').addEventListener('change', async () => {
+    const f = $('pFile').files[0];
+    if (!f) return;
+    try { padBase = await loadImg(await fileToDataUrl(f, 900)); padPaint(); } catch {}
+    $('pFile').value = '';
+  });
   $('pCancel').addEventListener('click', () => padDlg.close());
-  $('pDone').addEventListener('click', () => { bImg = pad.toDataURL('image/jpeg', .82); padDlg.close(); bSync(); });
+  $('pDone').addEventListener('click', async () => {
+    padPaint();
+    const img = pad.toDataURL('image/jpeg', .82);
+    if (!padLive) { bImg = img; padDlg.close(); bSync(); return; }
+    const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    try {
+      await baulRef.child(id).set({ id, type: 'dibujo', who: 'Juntos', title: 'Dibujo hecho juntos', text: '', image: img, createdAt: Date.now() });
+      $('padLive').textContent = 'Guardado en el baúl.';
+    } catch { $('padLive').textContent = 'No se pudo guardar en el baúl.'; }
+  });
 
   async function toggleSeen(id) {
     popId = id;
