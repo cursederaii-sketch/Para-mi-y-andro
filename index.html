@@ -4,259 +4,235 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para ver</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
   :root {
-    --bg: #131316;
-    --surface: #1b1b1f;
-    --surface-2: #202024;
-    --line: #29292e;
-    --text: #eaeaec;
-    --muted: #86868f;
-    --accent: #9c6b4f;
-    --accent-soft: #9c6b4f22;
-    --warn: #b5654f;
+    --bg:#FCF8F9; --paper:#fff; --ink:#3B2A35; --muted:#84707B; --line:#EBD9E0;
+    --rose:#C94468; --rose-soft:#FBE7ED; --lav:#7A6BC4; --lav-soft:#ECE8F8;
+    --on-rose:#fff; --warn:#B3443A; --cream:#FAF1E1; color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#1B141A; --paper:#251B22; --ink:#F5E9EF; --muted:#A88F9C; --line:#3A2A33;
+      --rose:#EE7A9A; --rose-soft:#3B2330; --lav:#A99BEA; --lav-soft:#2D2743;
+      --on-rose:#2A1520; --warn:#F08A7E; --cream:#EFE3D0;
+    }
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    min-height: 100vh;
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font: 400 15px/1.5 Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap {
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 48px 20px 100px;
-  }
-  h1 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin: 0 0 6px;
-  }
-  .sub {
-    color: var(--muted);
-    font-size: 14px;
-    margin: 0 0 28px;
-  }
-  .banner {
-    display: none;
-    background: #b5654f18;
-    border: 1px solid #b5654f55;
-    color: #d7a08e;
-    font-size: 13px;
-    padding: 10px 13px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    line-height: 1.4;
-  }
+  h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 400; margin: 0; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; border-radius: 6px; }
 
-  form {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 36px;
-  }
-  input {
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    color: var(--text);
-    padding: 11px 13px;
-    border-radius: 9px;
-    font-size: 14px;
-    outline: none;
-    width: 100%;
-    font-family: inherit;
-    transition: border-color 0.15s ease;
-  }
-  input:focus { border-color: var(--accent); }
-  input::placeholder { color: var(--muted); }
+  .wrap { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 48px 28px 84px; }
+  .doodles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: .5; }
+  .dd { position: absolute; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
-  button {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 11px 14px;
-    border-radius: 9px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.15s ease;
-  }
-  button:hover { opacity: 0.88; }
-  button:disabled { opacity: 0.5; cursor: default; }
+  /* Hero */
+  .hero { text-align: center; padding: 8px 0 26px; }
+  .art { width: min(240px, 70%); height: auto; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+  .h1 { fill: var(--rose-soft); stroke: var(--rose); }
+  .h2 { stroke: var(--lav); }
+  .sp { stroke: var(--rose); }
+  .sp2 { stroke: var(--lav); }
+  .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.8s .15s cubic-bezier(.5,0,.2,1) forwards; }
+  .draw.d2 { animation-delay: .6s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  h1 { font-size: clamp(44px, 12vw, 64px); font-style: italic; font-weight: 300; letter-spacing: -.025em; line-height: 1; margin-top: -6px; }
+  .sub { display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--muted); margin: 12px 0 4px; font-size: 14.5px; }
+  .sub .i { width: 15px; height: 15px; color: var(--rose); fill: var(--rose); stroke-width: 0; }
+  .since { background: none; border: 0; color: var(--rose); font: italic 400 15.5px Fraunces, Georgia, serif; cursor: pointer; padding: 4px 10px; border-radius: 10px; }
+  .since:hover { background: var(--rose-soft); }
 
-  .who-select, .cat-select {
-    display: flex;
-    gap: 6px;
-  }
-  .pill {
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    color: var(--muted);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    flex: 1;
-    text-align: center;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  .pill.active { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
+  .banner { display: none; background: var(--rose-soft); border: 1px solid var(--rose); color: var(--warn); font-size: 13px; padding: 10px 14px; border-radius: 14px; margin-bottom: 20px; }
 
+  /* Resumen */
+  .sum { margin: 0 0 30px; text-align: center; }
+  .sumtxt { font-size: 13.5px; color: var(--muted); }
+  .track { position: relative; height: 2px; background: var(--line); margin: 14px 6px 20px; }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: var(--rose); width: calc(9px + (100% - 18px) * var(--p, 0)); transition: width .6s ease; }
+  .mk { position: absolute; top: 50%; width: 18px; height: 17px; left: calc(9px + (100% - 18px) * var(--p, 0)); transform: translate(-50%, -50%); fill: var(--rose); stroke: var(--bg); stroke-width: 8; transition: left .6s ease; }
+  .ghost { background: none; border: 1.5px solid var(--rose); color: var(--rose); border-radius: 999px; padding: 8px 18px; font: 600 13.5px Figtree, sans-serif; cursor: pointer; transition: background .15s; }
+  .ghost:hover { background: var(--rose-soft); }
+  .pick { margin: 12px 0 0; min-height: 24px; font: italic 17px Fraunces, Georgia, serif; }
+  .pick small { display: block; font: 400 12.5px Figtree, sans-serif; color: var(--muted); }
+  .pick a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rose); text-underline-offset: 4px; }
+
+  /* Formulario */
+  form { background: var(--paper); border: 1px solid var(--line); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 34px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { background: none; border: 1px solid var(--line); color: var(--muted); padding: 6px 13px; border-radius: 999px; font: 500 13px Figtree, sans-serif; cursor: pointer; transition: .15s; }
+  .pill:hover { color: var(--ink); }
+  .pill.active { color: var(--ink); border-color: var(--rose); background: var(--rose-soft); }
+  .pill[data-who="Diego"].active { border-color: var(--lav); background: var(--lav-soft); }
+  input { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: 11px 14px; border-radius: 14px; font: inherit; font-size: 14px; }
+  input:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-soft); }
+  input::placeholder { color: var(--muted); opacity: .85; }
+  #sinceInput { width: auto; margin-top: 6px; text-align: center; }
+  .btn { background: var(--rose); color: var(--on-rose); border: 0; border-radius: 999px; padding: 11px 18px; font: 600 14px Figtree, sans-serif; cursor: pointer; }
+  .btn:hover { opacity: .9; }
+  .btn:disabled { opacity: .5; cursor: default; }
   .status { font-size: 13px; color: var(--muted); min-height: 16px; }
   .status.error { color: var(--warn); }
 
-  .section { margin-bottom: 36px; }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--line);
-  }
-  .section-title { font-size: 15px; font-weight: 600; }
-  .section-count { font-size: 12px; color: var(--muted); }
+  /* Filtros y listas */
+  .tabs { display: flex; gap: 18px; justify-content: center; margin: 0 0 26px; }
+  .tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 4px 2px; color: var(--muted); font: 500 14px Figtree, sans-serif; cursor: pointer; }
+  .tabs button.on { color: var(--ink); border-color: var(--rose); }
+  .section { margin-bottom: 34px; }
+  .sh { display: flex; align-items: center; gap: 9px; margin-bottom: 4px; color: var(--rose); }
+  .sh h2 { flex: 1; font-size: 23px; font-style: italic; color: var(--ink); }
+  .ct { font-size: 12px; color: var(--rose); background: var(--rose-soft); border-radius: 999px; min-width: 24px; height: 24px; display: grid; place-items: center; padding: 0 7px; }
 
-  .item {
-    display: flex;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-  }
-  .item.seen { opacity: 0.42; }
-
-  .thumb {
-    width: 76px;
-    height: 76px;
-    border-radius: 8px;
-    background: var(--surface-2);
-    flex-shrink: 0;
-    object-fit: cover;
-    display: block;
-  }
-  .thumb.placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    font-size: 11px;
-    text-align: center;
-    padding: 4px;
-  }
-
+  .item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1.5px dashed var(--line); }
+  .item:last-child { border-bottom: 0; }
+  .item.seen { opacity: .5; }
+  .thumb { width: 72px; height: 72px; border-radius: 18px; background: var(--rose-soft); flex: none; object-fit: cover; display: block; }
+  .thumb.ph { display: flex; align-items: center; justify-content: center; color: var(--rose); font-size: 11px; text-align: center; padding: 4px; word-break: break-all; }
   .content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-  .title {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0 0 3px;
-    line-height: 1.3;
-  }
+  .title { font-weight: 600; font-size: 14.5px; line-height: 1.3; margin: 0 0 3px; }
   .item.seen .title { text-decoration: line-through; }
-  a.title-link { color: var(--text); text-decoration: none; }
-  a.title-link:hover { color: var(--accent); }
-  .desc {
-    font-size: 12.5px;
-    color: var(--muted);
-    margin: 0 0 6px;
-    line-height: 1.4;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .note {
-    font-size: 12.5px;
-    color: var(--muted);
-    font-style: italic;
-    margin: 0 0 6px;
-  }
-  .meta { display: flex; gap: 8px; align-items: center; margin-top: auto; }
-  .who {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 5px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    color: var(--muted);
-  }
-  .date { font-size: 11px; color: var(--muted); }
+  a.tl { color: var(--ink); text-decoration: none; }
+  a.tl:hover { color: var(--rose); }
+  .desc { font-size: 12.5px; color: var(--muted); margin: 0 0 5px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .note { font: italic 14px Fraunces, Georgia, serif; color: var(--rose); margin: 0 0 5px; }
+  .meta { display: flex; gap: 10px; align-items: center; margin-top: auto; font-size: 11.5px; color: var(--muted); }
+  .who { display: inline-flex; align-items: center; gap: 5px; }
+  .who::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--rose); }
+  .who.Diego::before { background: var(--lav); }
+  .actions { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; flex: none; }
+  .check { background: none; border: 0; padding: 2px; cursor: pointer; color: var(--muted); line-height: 0; }
+  .check svg { width: 26px; height: 24px; fill: none; stroke: currentColor; stroke-width: 5; stroke-linejoin: round; }
+  .check:hover { color: var(--rose); }
+  .item.seen .check { color: var(--rose); }
+  .item.seen .check svg { fill: var(--rose); }
+  .item.seen .pop svg { animation: pop .4s; }
+  @keyframes pop { 40% { transform: scale(1.35); } }
+  .del { background: none; border: 0; color: var(--muted); font: 12px Figtree, sans-serif; cursor: pointer; padding: 2px; }
+  .del:hover { color: var(--rose); text-decoration: underline; }
+  .empty { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 13.5px; padding: 14px 0; }
+  .empty svg { width: 30px; height: 28px; flex: none; color: var(--rose); fill: none; stroke: currentColor; stroke-width: 4; stroke-dasharray: 6 7; stroke-linecap: round; }
 
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-shrink: 0;
-    justify-content: space-between;
-  }
-  .check {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 1.5px solid var(--muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
-  .item.seen .check { background: var(--accent); border-color: var(--accent); }
-  .check::after { content: ""; width: 8px; height: 8px; border-radius: 50%; }
-  .item.seen .check::after { background: #fff; }
-  .del {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 12px;
-    padding: 2px;
-  }
-  .del:hover { color: var(--accent); }
+  .foot { text-align: center; margin-top: 20px; color: var(--muted); font: italic 15px Fraunces, Georgia, serif; }
+  .foot svg { display: block; margin: 0 auto 8px; width: 110px; height: 54px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
-  .empty {
-    color: var(--muted);
-    font-size: 13px;
-    padding: 14px 0;
+  .frame { position: fixed; inset: 10px; z-index: 5; pointer-events: none; border-radius: 26px; border: 1.5px solid #D9B8C0; box-shadow: 0 0 0 60px var(--cream); }
+  .frame::after { content: ""; position: absolute; inset: 5px; border: 1px dashed rgba(201,68,104,.55); border-radius: 21px; }
+  .fc { position: absolute; width: 26px; height: 24px; fill: var(--cream); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  @media (min-width: 640px) { .frame { inset: 18px; } }
+  .hint { margin: 0 0 4px; font-size: 12.5px; color: var(--muted); }
+  .i.big { width: 30px; height: 30px; }
+  .ip { font: 500 13.5px ui-monospace, Menlo, Consolas, monospace; background: var(--rose-soft); padding: 3px 9px; border-radius: 8px; word-break: break-all; user-select: all; }
+  .del.cp { color: var(--rose); font-weight: 600; }
+  .fly { position: fixed; z-index: 9; width: 12px; height: 11px; pointer-events: none; color: var(--rose); animation: fly 1s var(--d) ease-out forwards; }
+  .fly svg { width: 100%; height: 100%; fill: currentColor; }
+  @keyframes fly { from { opacity: 1; transform: translate(-50%,-50%) scale(.6); } to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .fly { display: none; }
+    * { animation: none !important; transition: none !important; }
+    .draw { stroke-dashoffset: 0; }
   }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="heart" d="M50 86C22 64 6 47 6 29 6 16 16 7 28 7c9 0 17 5 22 14 5-9 13-14 22-14 12 0 22 9 22 22 0 18-16 35-44 57z"/>
+  <path id="spark" d="M0-9C1-4 4-1 9 0 4 1 1 4 0 9-1 4-4 1-9 0-4-1-1-4 0-9z"/>
+  <path id="i-Anime" d="M12 3c.8 5 3 7.2 8 8-5 .8-7.2 3-8 8-.8-5-3-7.2-8-8 5-.8 7.2-3 8-8z"/>
+  <path id="i-YouTube" d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM10 9.5v5l4.5-2.5z"/>
+  <path id="i-Peliculas" d="M4 5h16v14H4zM8 5v14M16 5v14M4 10h4M4 14h4M16 10h4M16 14h4"/>
+  <path id="i-Series" d="M3 7h18v12H3zM8 3l4 4 4-4"/>
+  <path id="i-Juegos" d="M6 9h12a3 3 0 0 1 3 3.5l-.7 3.6a2 2 0 0 1-3.4.9L15 15H9l-1.9 2a2 2 0 0 1-3.4-.9L3 12.5A3 3 0 0 1 6 9zM8 11v3M6.5 12.5h3M16 12h.01M18 13.5h.01"/>
+  <path id="cube" d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9"/>
+</defs></svg>
+
+<div class="doodles" aria-hidden="true">
+  <svg class="dd" viewBox="0 0 100 92" style="top:9%;left:-14px;width:64px;color:var(--rose);transform:rotate(-16deg)"><use href="#heart"/></svg>
+  <svg class="dd" viewBox="-10 -10 20 20" style="top:6%;right:7%;width:26px;color:var(--lav)"><use href="#spark"/></svg>
+  <svg class="dd" viewBox="0 0 100 92" style="top:38%;right:-10px;width:46px;color:var(--lav);transform:rotate(14deg)"><use href="#heart"/></svg>
+  <svg class="dd" viewBox="-10 -10 20 20" style="top:52%;left:3%;width:22px;color:var(--rose)"><use href="#spark"/></svg>
+  <svg class="dd" viewBox="0 0 100 92" style="bottom:8%;right:5%;width:54px;color:var(--rose);transform:rotate(10deg)"><use href="#heart"/></svg>
+  <svg class="dd" viewBox="-10 -10 20 20" style="bottom:14%;left:8%;width:30px;color:var(--lav)"><use href="#spark"/></svg>
+</div>
+
+<div class="frame" aria-hidden="true">
+  <svg class="fc" viewBox="0 0 100 92" style="top:-16px;left:-14px;stroke:#C94468;transform:rotate(-18deg)"><use href="#heart"/></svg>
+  <svg class="fc" viewBox="-10 -10 20 20" style="top:-14px;right:-13px;width:24px;height:24px;stroke:#7A6BC4;stroke-width:1.5"><use href="#spark"/></svg>
+  <svg class="fc" viewBox="-10 -10 20 20" style="bottom:-14px;left:-13px;width:24px;height:24px;stroke:#7A6BC4;stroke-width:1.5"><use href="#spark"/></svg>
+  <svg class="fc" viewBox="0 0 100 92" style="bottom:-16px;right:-14px;stroke:#C94468;transform:rotate(16deg)"><use href="#heart"/></svg>
+</div>
+
 <div class="wrap">
-  <h1>Para ver</h1>
-  <p class="sub">Lista compartida de Diego &amp; Andro.</p>
+  <header class="hero">
+    <svg class="art" viewBox="0 0 240 120" aria-hidden="true">
+      <path class="draw h1" pathLength="1" transform="translate(58 14) scale(.98)" d="M50 86C22 64 6 47 6 29 6 16 16 7 28 7c9 0 17 5 22 14 5-9 13-14 22-14 12 0 22 9 22 22 0 18-16 35-44 57z"/>
+      <path class="draw d2 h2" pathLength="1" transform="translate(112 30) rotate(12 47 43) scale(.8)" d="M50 86C22 64 6 47 6 29 6 16 16 7 28 7c9 0 17 5 22 14 5-9 13-14 22-14 12 0 22 9 22 22 0 18-16 35-44 57z"/>
+      <g class="sp"><use href="#spark" transform="translate(34 30) scale(.85)"/></g>
+      <g class="sp2"><use href="#spark" transform="translate(206 22) scale(.65)"/><use href="#spark" transform="translate(30 92) scale(.5)"/></g>
+      <g class="sp"><use href="#spark" transform="translate(200 98) scale(.75)"/></g>
+    </svg>
+    <h1>Para ver</h1>
+    <p class="sub">Lista compartida de Diego <svg class="i" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg> Andro</p>
+    <button type="button" class="since" id="sinceBtn"></button>
+    <input type="date" id="sinceInput" aria-label="Fecha en que empezaron" hidden>
+  </header>
 
   <div class="banner" id="storageBanner">
-    No se pudo conectar con la base de datos. Revisa tu conexión o vuelve a cargar la página.
+    No se pudo conectar con la base de datos. Revisá tu conexión o volvé a cargar la página.
   </div>
 
+  <section class="sum">
+    <div class="sumtxt" id="sumTxt"></div>
+    <div class="track" id="track"><i class="fill"></i><svg class="mk" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg></div>
+    <button type="button" class="ghost" id="pickBtn">Elegir algo para hoy</button>
+    <p class="pick" id="pick" aria-live="polite"></p>
+  </section>
+
   <form id="form">
-    <div class="who-select" id="whoSelect">
+    <div class="chips" id="whoSelect">
       <button type="button" class="pill active" data-who="Diego">Diego</button>
       <button type="button" class="pill" data-who="Andro">Andro</button>
     </div>
-    <div class="cat-select" id="catSelect">
+    <div class="chips" id="catSelect">
       <button type="button" class="pill active" data-cat="Anime">Anime</button>
       <button type="button" class="pill" data-cat="YouTube">YouTube</button>
       <button type="button" class="pill" data-cat="Peliculas">Películas</button>
+      <button type="button" class="pill" data-cat="Series">Series</button>
+      <button type="button" class="pill" data-cat="Juegos">Juegos</button>
     </div>
-    <input id="url" type="text" placeholder="Pega el enlace acá" required>
+    <input id="url" type="text" placeholder="Pegá el enlace acá" required>
     <input id="noteInput" type="text" placeholder="Nota (opcional)">
-    <button type="submit" id="submitBtn">Agregar</button>
+    <button type="submit" class="btn" id="submitBtn">Agregar</button>
     <div class="status" id="status"></div>
   </form>
 
+  <nav class="tabs" id="filters">
+    <button type="button" class="on" data-f="all">Todo</button>
+    <button type="button" data-f="todo">Por ver</button>
+    <button type="button" data-f="seen">Vistas</button>
+  </nav>
+
   <div id="sections"></div>
+
+  <footer class="foot">
+    <svg viewBox="0 0 140 70" aria-hidden="true">
+      <g style="color:var(--rose)"><use href="#heart" transform="translate(22 22) scale(.34)"/></g>
+      <g style="color:var(--lav)"><use href="#heart" transform="translate(74 8) scale(.46) rotate(8 50 46)"/></g>
+      <g style="color:var(--rose)"><use href="#spark" transform="translate(64 50) scale(.6)"/></g>
+      <path d="M10 62c30-14 90-14 120 0" stroke-dasharray="2 7" style="color:var(--muted)"/>
+    </svg>
+    Hecho con cariño para dos.
+  </footer>
 </div>
 
 <script>
@@ -275,21 +251,92 @@
   const db = firebase.database();
   const itemsRef = db.ref('paraVer/items');
 
-  const CATEGORIES = ['Anime', 'YouTube', 'Peliculas'];
-  const CAT_LABELS = { Anime: 'Anime', YouTube: 'YouTube', Peliculas: 'Películas' };
+  const $ = id => document.getElementById(id);
+  const CATEGORIES = ['Anime', 'YouTube', 'Peliculas', 'Series', 'Juegos'];
+  const CAT_LABELS = { Anime: 'Anime', YouTube: 'YouTube', Peliculas: 'Películas', Series: 'Series', Juegos: 'Juegos' };
   let items = [];
   let currentWho = 'Diego';
   let currentCat = 'Anime';
+  let currentFilter = 'all';
+  let popId = null;
 
-  const sectionsEl = document.getElementById('sections');
-  const statusEl = document.getElementById('status');
-  const bannerEl = document.getElementById('storageBanner');
-  const form = document.getElementById('form');
-  const urlInput = document.getElementById('url');
-  const noteInput = document.getElementById('noteInput');
-  const whoSelect = document.getElementById('whoSelect');
-  const catSelect = document.getElementById('catSelect');
-  const submitBtn = document.getElementById('submitBtn');
+  const sectionsEl = $('sections');
+  const statusEl = $('status');
+  const bannerEl = $('storageBanner');
+  const form = $('form');
+  const urlInput = $('url');
+  const noteInput = $('noteInput');
+  const whoSelect = $('whoSelect');
+  const catSelect = $('catSelect');
+  const submitBtn = $('submitBtn');
+  const looksLikeLink = s => /^(https?:\/\/|www\.)|roblox\.com/i.test(s);
+  const fixUrl = s => /^https?:\/\//i.test(s) ? s : 'https://' + s;
+  catSelect.addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (b) urlInput.placeholder = b.dataset.cat === 'Juegos' ? 'Link de Roblox, IP del server, etc.' : 'Pegá el enlace acá';
+  });
+
+  // --- Días juntos (se guarda en la base y, de respaldo, en el navegador) ---
+  const sinceRef = db.ref('paraVer/since');
+  const sinceBtn = $('sinceBtn');
+  const sinceInput = $('sinceInput');
+  let since = null;
+  try { since = localStorage.getItem('since'); } catch {}
+
+  function renderSince() {
+    const d = since ? Math.floor((Date.now() - new Date(since + 'T00:00:00')) / 864e5) : NaN;
+    sinceBtn.textContent = d > 0 ? `Juntos hace ${d} ${d === 1 ? 'día' : 'días'}`
+      : d === 0 ? 'Juntos desde hoy' : 'Poné la fecha en que empezaron';
+    sinceBtn.hidden = false;
+    sinceInput.hidden = true;
+  }
+  sinceBtn.addEventListener('click', () => {
+    sinceBtn.hidden = true;
+    sinceInput.hidden = false;
+    sinceInput.value = since || '';
+    sinceInput.focus();
+  });
+  sinceInput.addEventListener('change', () => {
+    since = sinceInput.value;
+    try { localStorage.setItem('since', since); } catch {}
+    sinceRef.set(since).catch(() => {});
+    renderSince();
+  });
+  sinceInput.addEventListener('blur', renderSince);
+  sinceRef.on('value', (s) => {
+    const v = s.val();
+    if (v) { since = v; try { localStorage.setItem('since', v); } catch {} }
+    renderSince();
+  }, renderSince);
+
+  // --- Filtros ---
+  $('filters').addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    currentFilter = b.dataset.f;
+    [...$('filters').children].forEach(x => x.classList.toggle('on', x === b));
+    render();
+  });
+
+  // --- Elegir algo para hoy ---
+  $('pickBtn').addEventListener('click', () => {
+    const pool = items.filter(i => !i.seen && !i.isText);
+    const out = $('pick');
+    out.textContent = '';
+    if (!pool.length) {
+      out.textContent = items.length ? 'Ya vieron todo. Sumen algo nuevo.' : 'Todavía no hay nada guardado.';
+      return;
+    }
+    const p = pool[Math.floor(Math.random() * pool.length)];
+    const small = document.createElement('small');
+    small.textContent = 'Hoy podrían ver (' + (CAT_LABELS[p.category] || p.category) + ')';
+    const a = document.createElement('a');
+    a.href = p.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = p.title || domainOf(p.url);
+    out.append(small, a);
+  });
 
   whoSelect.addEventListener('click', (e) => {
     const btn = e.target.closest('.pill');
@@ -345,108 +392,136 @@
     return { title: '', description: '', image: '' };
   }
 
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  const HEART = '<svg viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg>';
+  function burst(btn) {
+    const r = btn.getBoundingClientRect();
+    for (let i = 0; i < 6; i++) {
+      const h = document.createElement('span');
+      h.className = 'fly';
+      h.innerHTML = HEART;
+      h.style.cssText = `left:${r.left + r.width / 2}px;top:${r.top + r.height / 2}px;--dx:${(Math.random() - .5) * 70}px;--dy:${-40 - Math.random() * 40}px;--d:${Math.random() * .15}s`;
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1200);
+    }
+  }
+
+  function emptyEl(msg) {
+    const e = el('div', 'empty');
+    e.innerHTML = HEART;
+    e.append(el('span', null, msg));
+    return e;
+  }
+
+  function row(item) {
+    const r = el('div', 'item' + (item.seen ? ' seen' : ''));
+    let thumb;
+    if (item.isText) {
+      thumb = el('div', 'thumb ph');
+      thumb.innerHTML = '<svg class="i big" viewBox="0 0 24 24" aria-hidden="true"><use href="#cube"/></svg>';
+    } else if (item.image) {
+      thumb = el('img', 'thumb');
+      thumb.src = item.image;
+      thumb.alt = '';
+      thumb.loading = 'lazy';
+      thumb.onerror = () => { thumb.style.display = 'none'; };
+    } else {
+      thumb = el('div', 'thumb ph', domainOf(item.url));
+    }
+
+    const c = el('div', 'content');
+    const t = el('p', 'title');
+    const a = el('a', 'tl', item.title || domainOf(item.url));
+    a.href = item.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    if (item.isText) t.appendChild(el('code', 'ip', item.url)); else t.appendChild(a);
+    c.appendChild(t);
+    if (item.description) c.appendChild(el('p', 'desc', item.description));
+    if (item.note) c.appendChild(el('p', 'note', item.note));
+    const m = el('div', 'meta');
+    m.append(
+      el('span', 'who ' + item.addedBy, item.addedBy),
+      el('span', null, new Date(item.addedAt).toLocaleDateString('es', { day: 'numeric', month: 'short' }))
+    );
+    c.appendChild(m);
+
+    const act = el('div', 'actions');
+    const chk = el('button', 'check' + (item.id === popId ? ' pop' : ''));
+    chk.type = 'button';
+    chk.setAttribute('aria-pressed', String(!!item.seen));
+    chk.setAttribute('aria-label', item.seen ? 'Marcar como no visto' : 'Marcar como visto');
+    chk.innerHTML = HEART;
+    chk.onclick = () => toggleSeen(item.id);
+    const del = el('button', 'del', 'Eliminar');
+    del.type = 'button';
+    del.onclick = () => { if (confirm('¿Eliminar este ítem?')) removeItem(item.id); };
+    if (item.isText) {
+      const cp = el('button', 'del cp', 'Copiar');
+      cp.type = 'button';
+      cp.onclick = () => {
+        navigator.clipboard.writeText(item.url).then(() => {
+          cp.textContent = '¡Copiado!';
+          setTimeout(() => { cp.textContent = 'Copiar'; }, 1500);
+        }).catch(() => {});
+      };
+      act.append(cp, del);
+    } else act.append(chk, del);
+
+    r.append(thumb, c, act);
+    return r;
+  }
+
   function render() {
+    const counted = items.filter(i => !i.isText);
+    const total = counted.length;
+    const seen = counted.filter(i => i.seen).length;
+    $('sumTxt').textContent = total ? `${seen} de ${total} vistas` : 'Empiecen sumando algo para ver juntos';
+    $('track').style.setProperty('--p', total ? seen / total : 0);
+
     sectionsEl.innerHTML = '';
     for (const cat of CATEGORIES) {
-      const catItems = items.filter(i => i.category === cat).sort((a, b) => b.addedAt - a.addedAt);
-      const section = document.createElement('div');
-      section.className = 'section';
+      let list = items.filter(i => i.category === cat).sort((a, b) => b.addedAt - a.addedAt);
+      if (currentFilter === 'todo') list = list.filter(i => !i.seen);
+      if (currentFilter === 'seen') list = list.filter(i => i.seen);
+      if (!list.length && currentFilter !== 'all') continue;
 
-      const head = document.createElement('div');
-      head.className = 'section-head';
-      const titleEl = document.createElement('div');
-      titleEl.className = 'section-title';
-      titleEl.textContent = CAT_LABELS[cat];
-      const countEl = document.createElement('div');
-      countEl.className = 'section-count';
-      countEl.textContent = catItems.length;
-      head.appendChild(titleEl);
-      head.appendChild(countEl);
+      const section = el('div', 'section');
+      const head = el('div', 'sh');
+      head.innerHTML = `<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-${cat}"/></svg>`;
+      head.append(el('h2', null, CAT_LABELS[cat]), el('span', 'ct', list.length));
       section.appendChild(head);
-
-      if (!catItems.length) {
-        const empty = document.createElement('div');
-        empty.className = 'empty';
-        empty.textContent = 'Nada guardado todavía.';
-        section.appendChild(empty);
-      }
-
-      for (const item of catItems) {
-        const row = document.createElement('div');
-        row.className = 'item' + (item.seen ? ' seen' : '');
-
-        let thumb;
-        if (item.image) {
-          thumb = document.createElement('img');
-          thumb.className = 'thumb';
-          thumb.src = item.image;
-          thumb.alt = '';
-          thumb.onerror = () => { thumb.style.display = 'none'; };
-        } else {
-          thumb = document.createElement('div');
-          thumb.className = 'thumb placeholder';
-          thumb.textContent = domainOf(item.url);
-        }
-
-        const content = document.createElement('div');
-        content.className = 'content';
-
-        const title = document.createElement('p');
-        title.className = 'title';
-        const link = document.createElement('a');
-        link.className = 'title-link';
-        link.href = item.url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = item.title || domainOf(item.url);
-        title.appendChild(link);
-        content.appendChild(title);
-
-        if (item.description) {
-          const desc = document.createElement('p');
-          desc.className = 'desc';
-          desc.textContent = item.description;
-          content.appendChild(desc);
-        }
-        if (item.note) {
-          const note = document.createElement('p');
-          note.className = 'note';
-          note.textContent = item.note;
-          content.appendChild(note);
-        }
-
-        const meta = document.createElement('div');
-        meta.className = 'meta';
-        const who = document.createElement('span');
-        who.className = 'who';
-        who.textContent = item.addedBy;
-        meta.appendChild(who);
-        const date = document.createElement('span');
-        date.className = 'date';
-        date.textContent = new Date(item.addedAt).toLocaleDateString('es', { day: 'numeric', month: 'short' });
-        meta.appendChild(date);
-        content.appendChild(meta);
-
-        const actions = document.createElement('div');
-        actions.className = 'actions';
-        const check = document.createElement('div');
-        check.className = 'check';
-        check.addEventListener('click', () => toggleSeen(item.id));
-        const del = document.createElement('button');
-        del.className = 'del';
-        del.textContent = 'Eliminar';
-        del.addEventListener('click', () => removeItem(item.id));
-        actions.appendChild(check);
-        actions.appendChild(del);
-
-        row.appendChild(thumb);
-        row.appendChild(content);
-        row.appendChild(actions);
-        section.appendChild(row);
-      }
-
+      if (cat === 'Juegos') section.appendChild(el('p', 'hint', 'Links de Roblox, IP de servers de Minecraft y lo que se les ocurra.'));
+      if (!list.length) section.appendChild(emptyEl('Nada guardado todavía. Pegá un enlace arriba para sumar el primero.'));
+      for (const item of list) section.appendChild(row(item));
       sectionsEl.appendChild(section);
     }
+    if (!sectionsEl.children.length) {
+      sectionsEl.appendChild(emptyEl(currentFilter === 'seen'
+        ? 'Todavía no marcaron nada como visto.'
+        : 'No queda nada por ver. ¡Sumen algo nuevo!'));
+    }
+    popId = null;
+  }
+
+  async function toggleSeen(id) {
+    popId = id;
+    items = items.map(i => i.id === id ? { ...i, seen: !i.seen } : i);
+    render();
+    const pb = document.querySelector('.item.seen .pop');
+    if (pb) burst(pb);
+    await persist();
+  }
+
+  async function removeItem(id) {
+    items = items.filter(i => i.id !== id);
+    render();
+    await persist();
   }
 
   // Live sync: both Diego and Andro see updates instantly, no manual reload needed.
@@ -467,22 +542,10 @@
       statusEl.classList.remove('error');
       return true;
     } catch (err) {
-      statusEl.textContent = 'No se pudo guardar. Revisa la conexión.';
+      statusEl.textContent = 'No se pudo guardar. Revisá la conexión.';
       statusEl.classList.add('error');
       return false;
     }
-  }
-
-  async function toggleSeen(id) {
-    items = items.map(i => i.id === id ? { ...i, seen: !i.seen } : i);
-    render();
-    await persist();
-  }
-
-  async function removeItem(id) {
-    items = items.filter(i => i.id !== id);
-    render();
-    await persist();
   }
 
   form.addEventListener('submit', async (e) => {
@@ -494,11 +557,13 @@
     statusEl.classList.remove('error');
     statusEl.textContent = 'Buscando vista previa...';
 
-    const preview = await fetchPreview(url);
+    const asText = currentCat === 'Juegos' && !looksLikeLink(url);
+    const preview = asText ? { title: '', description: '', image: '' } : await fetchPreview(fixUrl(url));
 
     const newItem = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-      url,
+      url: asText ? url : fixUrl(url),
+      isText: asText,
       title: preview.title,
       description: preview.description,
       image: preview.image,
