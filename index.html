@@ -616,8 +616,8 @@
       const b = document.createElement('b');
       b.textContent = name;
       li.appendChild(document.createTextNode(left === 0 ? '¡hoy es el cumple de ' : (left === 1 ? 'falta 1 día para el cumple de ' : `faltan ${left} días para el cumple de `)));
-      li.insertBefore(b, li.firstChild);
-      if (left === 0) li.appendChild(document.createTextNode('! 🎂'));
+      li.appendChild(b);
+      if (left === 0) li.appendChild(document.createTextNode('!')); else li.appendChild(document.createTextNode(''));
       out.appendChild(li);
     });
   }
@@ -1021,7 +1021,10 @@
     items = items.map(i => i.id === id ? { ...i, ...patch } : i);
     dlg.close();
     render();
-    await persist();
+    await itemsRef.child(id).update(patch).catch(() => {
+      statusEl.textContent = 'No se pudo guardar la edición.';
+      statusEl.classList.add('error');
+    });
   });
 
   // --- Imagen en grande ---
@@ -1292,7 +1295,13 @@
       const newBaul = d.baul.filter(e => e && e.id && !cur[e.id]);
       if (!newItems.length && !newBaul.length) { bkMsg.textContent = 'Esa copia no trae nada nuevo: ya está todo.'; return; }
       if (!confirm(`Se van a sumar ${newItems.length} de la lista y ${newBaul.length} del baúl. Lo que ya existe no se toca. ¿Seguimos?`)) return;
-      if (newItems.length) { items = [...items, ...newItems]; render(); await persist(); }
+      if (newItems.length) {
+        items = [...items, ...newItems];
+        render();
+        const patch = {};
+        for (const it of newItems) patch[it.id] = it;
+        await itemsRef.update(patch).catch(() => {});
+      }
       for (const e of newBaul) await baulRef.child(e.id).set(e);
       if (d.since && !since) { since = d.since; sinceRef.set(since).catch(() => {}); try { localStorage.setItem('since', since); } catch {} renderSince(); }
       bkMsg.textContent = `Listo: se sumaron ${newItems.length} de la lista y ${newBaul.length} del baúl.`;
@@ -1548,23 +1557,30 @@
 
   async function toggleSeen(id) {
     popId = id;
-    items = items.map(i => i.id === id ? { ...i, seen: !i.seen } : i);
+    const seen = !items.find(i => i.id === id)?.seen;
+    items = items.map(i => i.id === id ? { ...i, seen } : i);
     render();
     const pb = document.querySelector('.item.seen .pop');
     if (pb) burst(pb);
-    await persist();
+    await itemsRef.child(id).update({ seen }).catch(() => {
+      statusEl.textContent = 'No se pudo guardar el cambio.';
+      statusEl.classList.add('error');
+    });
   }
 
   async function setRating(id, n) {
     items = items.map(i => i.id === id ? { ...i, rating: n } : i);
     render();
-    await persist();
+    await itemsRef.child(id).update({ rating: n }).catch(() => {});
   }
 
   async function removeItem(id) {
     items = items.filter(i => i.id !== id);
     render();
-    await persist();
+    await itemsRef.child(id).remove().catch(() => {
+      statusEl.textContent = 'No se pudo eliminar. Revisá la conexión.';
+      statusEl.classList.add('error');
+    });
   }
 
   // Live sync: both Diego and Andro see updates instantly, no manual reload needed.
@@ -1576,20 +1592,6 @@
   }, (err) => {
     bannerEl.style.display = 'block';
   });
-
-  async function persist() {
-    const obj = {};
-    for (const item of items) obj[item.id] = item;
-    try {
-      await itemsRef.set(obj);
-      statusEl.classList.remove('error');
-      return true;
-    } catch (err) {
-      statusEl.textContent = 'No se pudo guardar. Revisá la conexión.';
-      statusEl.classList.add('error');
-      return false;
-    }
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -1624,8 +1626,14 @@
     noteInput.value = '';
     durInput.value = '0';
     statusEl.textContent = 'Guardando...';
-    const ok = await persist();
-    if (ok) statusEl.textContent = '';
+    try {
+      await itemsRef.child(newItem.id).set(newItem);
+      statusEl.classList.remove('error');
+      statusEl.textContent = '';
+    } catch (err) {
+      statusEl.textContent = 'No se pudo guardar. Revisá la conexión.';
+      statusEl.classList.add('error');
+    }
     submitBtn.disabled = false;
     urlInput.focus();
   });
