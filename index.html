@@ -605,6 +605,45 @@
   @keyframes flo { to { opacity: 0; transform: translateY(-46px); } }
   @media (max-width: 700px) { .mascot { width: 60px; height: 64px; right: 8px; bottom: 8px; } .mas-b { right: 58px; } }
   @media (prefers-reduced-motion: reduce) { .mas *, .mas, .sky *, .toast-ach { animation: none !important; } }
+
+  /* Carpeta de capítulos */
+  .thumb.folder { position: relative; display: grid; place-items: center; border: 0; padding: 0; cursor: pointer; background-color: var(--rose-soft); background-size: cover; background-position: center; overflow: hidden; }
+  .thumb.folder::after { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 30%, transparent); }
+  .thumb.folder .fico { position: relative; z-index: 1; display: grid; place-items: center; gap: 2px; background: color-mix(in srgb, var(--paper) 90%, transparent); color: var(--rose); border-radius: 16px; padding: 8px 10px 6px; font: 700 11px Figtree, sans-serif; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+  .thumb.folder .fico .i { width: 28px; height: 28px; fill: var(--rose-soft); }
+  .thumb.folder:hover .fico { filter: brightness(1.05); transform: scale(1.04); }
+  .epb { display: inline-flex; align-items: center; gap: 6px; background: var(--lav-soft); color: var(--lav); border: 0; border-radius: 999px; padding: 4px 12px; font: 600 12.5px Figtree, sans-serif; cursor: pointer; }
+  .epb:hover { filter: brightness(.95); }
+  #epDlg { width: min(560px, calc(100% - 32px)); max-height: 90vh; overflow: auto; }
+  #epDlg h2 { overflow-wrap: anywhere; display: flex; align-items: center; gap: 10px; }
+  #epDlg h2 .i { color: var(--rose); width: 26px; height: 26px; fill: var(--rose-soft); }
+  .eps-sub { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
+  .epnext { display: block; text-align: center; text-decoration: none; background: var(--rose); color: var(--on-rose); border-radius: 999px; padding: 11px 16px; font: 600 14px Figtree, sans-serif; margin-bottom: 12px; }
+  .epnext:hover { filter: brightness(1.06); }
+  .eplist { display: flex; flex-direction: column; gap: 8px; }
+  .epr { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 18px; padding: 8px 10px; background: var(--bg); }
+  .epr.on { background: var(--rose-soft); border-color: color-mix(in srgb, var(--rose) 45%, var(--line)); }
+  .epr.on .epn { color: var(--muted); }
+  .epk { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); background: none; cursor: pointer; display: grid; place-items: center; color: transparent; padding: 0; }
+  .epk svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+  .epr.on .epk { background: var(--rose); border-color: var(--rose); color: var(--on-rose); }
+  .epinfo { flex: 1; min-width: 0; }
+  .epn { display: block; font: 600 14px Figtree, sans-serif; }
+  .eprate { display: flex; gap: 1px; margin-top: 1px; }
+  .eprate button { background: none; border: 0; padding: 1px; cursor: pointer; color: var(--line); line-height: 0; }
+  .eprate button svg { width: 15px; height: 15px; fill: currentColor; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+  .eprate button.on { color: #E8A93B; }
+  .eprate button:hover { color: #E8A93B; }
+  .epplay { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--rose); color: var(--on-rose); display: grid; place-items: center; text-decoration: none; }
+  .epplay:hover { filter: brightness(1.08); }
+  .epplay svg { width: 14px; height: 14px; fill: currentColor; margin-left: 2px; }
+  .eplike { flex: none; background: none; border: 0; padding: 4px; cursor: pointer; color: var(--muted); line-height: 0; }
+  .eplike svg { width: 24px; height: 22px; fill: none; stroke: currentColor; stroke-width: 6; stroke-linejoin: round; }
+  .eplike:hover { color: var(--rose); }
+  .eplike.on { color: var(--rose); }
+  .eplike.on svg { fill: var(--rose); }
+  .eptot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .eptot input { width: 80px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: 7px 10px; border-radius: 12px; font: inherit; }
 </style>
 </head>
 <body>
@@ -853,6 +892,19 @@
     <button type="button" class="ghost" id="eCancel">Cancelar</button>
     <button type="button" class="btn" id="eSave">Guardar</button>
   </div>
+</dialog>
+
+<dialog id="epDlg" aria-label="Capítulos">
+  <h2><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span id="epTitle">Capítulos</span></h2>
+  <p class="eps-sub" id="epSub"></p>
+  <div id="epBody"></div>
+  <div class="eptot">
+    <label for="epTotIn">Total de capítulos</label>
+    <input id="epTotIn" type="number" min="1" max="2000" inputmode="numeric">
+    <button type="button" class="ghost" id="epTotSave">Guardar</button>
+    <button type="button" class="del" id="epRefetch">Buscar de nuevo</button>
+  </div>
+  <div class="row2"><button type="button" class="ghost" id="epClose">Cerrar</button></div>
 </dialog>
 
 <dialog id="baulDlg" aria-label="Nuestro baúl">
@@ -1254,6 +1306,15 @@
       thumb.onclick = () => openEdit(item);
     }
 
+    if (!item.isText && jkSlug(item.url)) {
+      thumb = el('button', 'thumb folder');
+      thumb.type = 'button';
+      if (item.image) thumb.style.backgroundImage = 'url("' + item.image.replace(/["\\\n\r]/g, '') + '")';
+      thumb.innerHTML = '<span class="fico">' + FOLDER + (item.epTotal ? item.epTotal + ' caps' : 'abrir') + '</span>';
+      thumb.title = 'Abrir carpeta de capítulos';
+      thumb.setAttribute('aria-label', 'Abrir carpeta de capítulos de ' + (item.title || domainOf(item.url)));
+      thumb.onclick = () => openEps(item.id);
+    }
     const side = el('div', 'side2');
     const c = el('div', 'content');
     const t = el('p', 'title');
@@ -1289,6 +1350,12 @@
     );
     if (item.duration) m.appendChild(el('span', 'dur', fmtDur(item.duration)));
     if (item.note) m.appendChild(el('span', 'note', 'Nota: ' + item.note));
+    if (!item.isText && jkSlug(item.url)) {
+      const eb = el('button', 'epb', item.epTotal ? 'Carpeta · ' + epSet(item).size + '/' + item.epTotal + ' vistos' : 'Carpeta');
+      eb.type = 'button';
+      eb.onclick = () => openEps(item.id);
+      m.appendChild(eb);
+    }
     if (item.isText && !item.coords) {
       const st = el('span', 'srv', 'revisando…');
       m.appendChild(st);
@@ -2010,9 +2077,158 @@
     items = val ? Object.values(val) : [];
     bannerEl.style.display = 'none';
     render();
+    if (epDlg.open) renderEps();
   }, (err) => {
     bannerEl.style.display = 'block';
   });
+
+  // --- Capítulos (JKAnime) ---
+  const JK_SKIP = ['genero', 'directorio', 'horario', 'estudio', 'studio', 'temporada', 'usuario', 'top', 'estrenos', 'comunidad', 'buscar', 'dash', 'idioma'];
+  function jkSlug(u) {
+    try {
+      const x = new URL(fixUrl(u));
+      if (!/(^|\.)jkanime\.net$/i.test(x.hostname)) return null;
+      const p = x.pathname.split('/').filter(Boolean);
+      return p.length && !JK_SKIP.includes(p[0].toLowerCase()) ? p[0] : null;
+    } catch { return null; }
+  }
+  async function fetchEpCount(base) {
+    const proxies = [
+      u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+      u => 'https://corsproxy.io/?url=' + encodeURIComponent(u)
+    ];
+    for (const px of proxies) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 9000);
+      try {
+        const r = await fetch(px(base), { signal: ctl.signal });
+        if (!r.ok) continue;
+        const txt = (await r.text()).replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+        const m = txt.match(/Episodios:\s*(\d+)/i);
+        if (m && +m[1] > 0 && +m[1] <= 2000) return +m[1];
+      } catch {} finally { clearTimeout(timer); }
+    }
+    return 0;
+  }
+  const epSet = (it, f = 'epSeen') => new Set(String(it[f] || '').split(',').filter(Boolean).map(Number));
+  const epUrl = (it, n) => 'https://jkanime.net/' + jkSlug(it.url) + '/' + n + '/';
+  const epDlg = $('epDlg');
+  let epId = null;
+  function epItem() { return items.find(i => i.id === epId); }
+  function openEps(id) { epId = id; renderEps(); if (!epDlg.open) epDlg.showModal(); }
+  const epRates = it => { const m = {}; String(it.epRate || '').split(',').filter(Boolean).forEach(p => { const [k, v] = p.split(':'); m[+k] = +v; }); return m; };
+  const FOLDER = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+  const PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function renderEps() {
+    const it = epItem();
+    if (!it) { if (epDlg.open) epDlg.close(); return; }
+    const total = it.epTotal || 0, seen = epSet(it), liked = epSet(it, 'epLike'), rates = epRates(it);
+    $('epTitle').textContent = it.title || domainOf(it.url);
+    $('epTotIn').value = total || '';
+    const body = $('epBody');
+    body.innerHTML = '';
+    if (!total) {
+      $('epSub').textContent = 'No pude leer la cantidad de capítulos. Escribila abajo o probá buscar de nuevo.';
+      return;
+    }
+    let done = 0;
+    for (let n = 1; n <= total; n++) if (seen.has(n)) done++;
+    $('epSub').textContent = done + ' de ' + total + ' vistos';
+    let next = 0;
+    for (let n = 1; n <= total; n++) if (!seen.has(n)) { next = n; break; }
+    if (next) {
+      const a = el('a', 'epnext', (done ? 'Seguir con el capítulo ' : 'Empezar por el capítulo ') + next);
+      a.href = epUrl(it, next); a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.onclick = () => markSeen(it.id, next);
+      body.appendChild(a);
+    }
+    const list = el('div', 'eplist');
+    for (let n = 1; n <= total; n++) {
+      const r = el('div', 'epr' + (seen.has(n) ? ' on' : ''));
+      const k = el('button', 'epk'); k.type = 'button'; k.innerHTML = CHECK;
+      k.setAttribute('aria-pressed', String(seen.has(n)));
+      k.setAttribute('aria-label', (seen.has(n) ? 'Marcar como no visto el capítulo ' : 'Marcar como visto el capítulo ') + n);
+      k.onclick = () => toggleEp(it.id, n);
+      const info = el('div', 'epinfo');
+      info.appendChild(el('span', 'epn', 'Capítulo ' + n));
+      const rt = el('div', 'eprate');
+      for (let i = 1; i <= 5; i++) {
+        const b = el('button', i <= (rates[n] || 0) ? 'on' : ''); b.type = 'button'; b.innerHTML = STAR;
+        b.setAttribute('aria-label', 'Calificar capítulo ' + n + ' con ' + i + ' de 5');
+        b.onclick = () => rateEp(it.id, n, i === rates[n] ? 0 : i);
+        rt.appendChild(b);
+      }
+      info.appendChild(rt);
+      const play = el('a', 'epplay'); play.innerHTML = PLAY;
+      play.href = epUrl(it, n); play.target = '_blank'; play.rel = 'noopener noreferrer';
+      play.title = 'Reproducir'; play.setAttribute('aria-label', 'Reproducir capítulo ' + n);
+      play.onclick = () => markSeen(it.id, n);
+      const lk = el('button', 'eplike' + (liked.has(n) ? ' on' : '')); lk.type = 'button';
+      lk.innerHTML = HEART; lk.title = 'Me gusta';
+      lk.setAttribute('aria-pressed', String(liked.has(n)));
+      lk.setAttribute('aria-label', 'Me gusta el capítulo ' + n);
+      lk.onclick = () => likeEp(it.id, n);
+      r.append(k, info, play, lk);
+      list.appendChild(r);
+    }
+    body.appendChild(list);
+  }
+  async function saveEp(id, patch) {
+    items = items.map(i => i.id === id ? { ...i, ...patch } : i);
+    render();
+    if (epDlg.open) renderEps();
+    await itemsRef.child(id).update(patch).catch(() => {
+      statusEl.textContent = 'No se pudo guardar el cambio.';
+      statusEl.classList.add('error');
+    });
+  }
+  function toggleEp(id, n, force) {
+    const it = items.find(i => i.id === id);
+    if (!it) return;
+    const set = epSet(it), wasFull = it.epTotal && set.size >= it.epTotal;
+    const on = force === undefined ? !set.has(n) : force;
+    on ? set.add(n) : set.delete(n);
+    const patch = { epSeen: [...set].sort((a, b) => a - b).join(',') };
+    if (it.epTotal && set.size >= it.epTotal) patch.seen = true;
+    else if (wasFull) patch.seen = false;
+    saveEp(id, patch);
+  }
+  function markSeen(id, n) {
+    const it = items.find(i => i.id === id);
+    if (it && !epSet(it).has(n)) toggleEp(id, n, true);
+  }
+  function likeEp(id, n) {
+    const it = items.find(i => i.id === id);
+    if (!it) return;
+    const set = epSet(it, 'epLike');
+    set.has(n) ? set.delete(n) : set.add(n);
+    saveEp(id, { epLike: [...set].sort((a, b) => a - b).join(',') });
+  }
+  function rateEp(id, n, v) {
+    const it = items.find(i => i.id === id);
+    if (!it) return;
+    const m = epRates(it);
+    if (v) m[n] = v; else delete m[n];
+    saveEp(id, { epRate: Object.keys(m).map(Number).sort((a, b) => a - b).map(k => k + ':' + m[k]).join(',') });
+  }
+  $('epClose').onclick = () => epDlg.close();
+  $('epTotSave').onclick = () => {
+    const n = Math.floor(Number($('epTotIn').value));
+    if (!epId || !(n >= 1 && n <= 2000)) return;
+    saveEp(epId, { epTotal: n });
+  };
+  $('epRefetch').onclick = async () => {
+    const it = epItem();
+    if (!it) return;
+    const btn = $('epRefetch');
+    btn.disabled = true; btn.textContent = 'Buscando…';
+    const n = await fetchEpCount('https://jkanime.net/' + jkSlug(it.url) + '/');
+    btn.disabled = false; btn.textContent = 'Buscar de nuevo';
+    if (n) saveEp(it.id, { epTotal: n });
+    else $('epSub').textContent = 'No se pudo leer la página ahora. Escribí el total a mano.';
+  };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -2025,6 +2241,15 @@
 
     const asText = currentCat === 'Juegos' && !looksLikeLink(url);
     const preview = asText ? { title: '', description: '', image: '' } : await fetchPreview(fixUrl(url));
+    let ep = {};
+    const slug = asText ? null : jkSlug(url);
+    if (slug) {
+      preview.title = (preview.title || '').replace(/\s*-\s*anime\b.*$/i, '').trim();
+      if (!preview.image) preview.image = 'https://cdn.jkdesa.com/assets/images/animes/image/' + slug + '.jpg';
+      statusEl.textContent = 'Buscando capítulos...';
+      const n = await fetchEpCount('https://jkanime.net/' + slug + '/');
+      if (n) ep = { epTotal: n, epSeen: '' };
+    }
 
     const newItem = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
@@ -2039,7 +2264,8 @@
       category: currentCat,
       addedBy: currentWho,
       addedAt: Date.now(),
-      seen: false
+      seen: false,
+      ...ep
     };
     items.push(newItem);
     render();
