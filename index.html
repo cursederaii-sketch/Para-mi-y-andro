@@ -413,7 +413,23 @@
   .hero .big { margin: 2px 0 4px; font: 600 34px/1 Figtree, sans-serif; }
   .hero .since { font: 400 14px Figtree, sans-serif; color: var(--ink); padding: 0; }
   .hero .since::after { content: " ♡"; color: var(--rose); }
-  .hero .count { display: none; }
+  .hero .count { display: block; margin: 6px 0 0; font: italic 400 15px/1.3 Fraunces, Georgia, serif; color: var(--rose); }
+  .hero .count:empty { display: none; }
+  .mbar { height: 8px; width: min(220px, 100%); margin-top: 8px; border-radius: 8px; background: var(--line); overflow: hidden; }
+  .mbar i { display: block; height: 100%; width: 0; border-radius: 8px; background: linear-gradient(90deg, var(--lav), var(--rose)); transition: width .6s cubic-bezier(.5,0,.2,1); }
+  .bdays .bl { color: var(--rose); font-style: italic; }
+  .stats { margin: 0; text-align: left; background: var(--paper); border: 1px solid color-mix(in srgb, var(--rose) 28%, var(--line)); border-radius: 26px; padding: 20px; }
+  .stats .sum-h { margin-bottom: 14px; }
+  .st-big { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .st-big div { background: var(--rose-soft); border-radius: 14px; padding: 10px 12px; }
+  .st-big b { display: block; font: 600 22px/1.1 Figtree, sans-serif; color: var(--ink); }
+  .st-big span { font-size: 12.5px; color: var(--muted); }
+  .st-row { display: grid; grid-template-columns: 78px 1fr auto; gap: 10px; align-items: center; margin: 7px 0; font-size: 13.5px; }
+  .st-row .tr { height: 8px; border-radius: 8px; background: var(--line); overflow: hidden; }
+  .st-row .tr i { display: block; height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--lav), var(--rose)); }
+  .st-row em { font-style: normal; color: var(--muted); font-size: 12.5px; }
+  .st-foot { margin: 14px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+  .st-foot b { color: var(--ink); font-weight: 600; }
   .bdays li { font: 400 14px/1.5 Figtree, sans-serif; color: var(--ink); }
   .bdays b { font-weight: 400; }
   .stat.pl > div { display: grid; gap: 6px; }
@@ -644,6 +660,95 @@
   .eplike.on svg { fill: var(--rose); }
   .eptot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .eptot input { width: 80px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: 7px 10px; border-radius: 12px; font: inherit; }
+
+  /* ===== Estética minimalista ===== */
+  :root { --sh: none; --r: 16px; }
+  body { font: 400 15px/1.6 Figtree, system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: .005em; }
+  .inw.sm select { height: 42px; line-height: 1.2; }
+  .hero { background: none; border-bottom: 1px solid var(--line); padding: 34px var(--pad) 26px; gap: 22px 44px; }
+  .brand h1 { transform: none; font: italic 300 clamp(40px, 7vw, 56px)/1 Fraunces, Georgia, serif; letter-spacing: -.02em; }
+  .brand h1 .hf { width: 18px; height: 17px; margin-top: 4px; opacity: .85; }
+  .brand .sub { transform: none; margin: 8px 0 0; font: 400 14px Figtree, sans-serif; color: var(--muted); letter-spacing: .02em; }
+  .stat { padding-left: 0; border-left: 0; gap: 14px; }
+  .stat .ico { width: 22px; height: 22px; color: var(--muted); stroke-width: 1.4; }
+  .stat .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .09em; }
+  .hero .big { font: 300 34px/1.1 Fraunces, Georgia, serif; letter-spacing: -.01em; }
+  .hero .since { color: var(--muted); font-size: 13px; }
+  .hero .count { font-size: 14px; color: var(--ink); }
+  .mbar { height: 3px; background: var(--line); }
+  .mbar i { background: var(--rose); }
+  .side button { border-radius: 10px; color: var(--muted); font-weight: 400; }
+  .side button:hover { background: none; color: var(--ink); }
+  .side button.cur { background: var(--rose-soft); color: var(--ink); }
+  .side .i { stroke-width: 1.5; }
+  .add, .item, .sum, .stats, .baulcard, .bcard { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: none; }
+  .add, .sum, .stats, .baulcard { padding: 22px; }
+  .item { transition: border-color .2s, background .2s; }
+  .item:hover { border-color: color-mix(in srgb, var(--rose) 45%, var(--line)); }
+  .list, .gal { gap: 12px; }
+  .section { margin-top: 38px; }
+  .sh { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 16px; }
+  .sh h2 { font: italic 300 26px Fraunces, Georgia, serif; }
+  .sh .i { color: var(--muted); stroke-width: 1.4; }
+  .sh .ct { color: var(--muted); font-size: 13px; background: none; }
+  .thumb, .gal .thumb { border-radius: 12px; box-shadow: none; }
+  .title { font-weight: 500; }
+  .desc, .meta { color: var(--muted); }
+  .sum-h h2 { font: italic 300 22px Fraunces, Georgia, serif; }
+  .sum-h { color: var(--muted); }
+  .track, .trow .track { height: 4px; background: var(--line); }
+  .fill { background: var(--rose); }
+  .st-big div { background: none; border: 1px solid var(--line); border-radius: 12px; }
+  .st-big b { font-weight: 300; font-family: Fraunces, Georgia, serif; font-size: 24px; }
+  .st-row .tr, .st-row .tr i { height: 4px; }
+  .st-row .tr i { background: var(--rose); }
+  input, select, textarea { border-radius: 12px; border: 1px solid var(--line); background: var(--bg); transition: border-color .2s, box-shadow .2s; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px color-mix(in srgb, var(--rose) 16%, transparent); }
+  .btn, .ghost, .pill { border-radius: 999px; box-shadow: none; }
+  .btn { background: var(--rose); color: var(--on-rose); font-weight: 500; }
+  .btn:hover { opacity: .9; }
+  .ghost, .sum .ghost { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 12px; }
+  .ghost:hover, .sum .ghost:hover { background: var(--rose-soft); border-color: var(--rose); }
+  .seg { border-radius: 999px; }
+  .seg .pill { border-radius: 0; }
+  .pill { background: none; border: 1px solid var(--line); color: var(--muted); }
+  .pill.active { background: var(--rose-soft); border-color: var(--rose); color: var(--ink); }
+  .bar .tabs button.on { background: var(--rose-soft); color: var(--ink); box-shadow: none; }
+  .seg .pill.active, .seg .pill[data-who="Diego"].active { background: var(--rose); color: var(--on-rose); }
+  .tdot { box-shadow: none; }
+  .foot, footer { color: var(--muted); }
+  a { text-underline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  /* ===== Dibujos: delicados y con vida ===== */
+  .dd { stroke-width: 1.7; opacity: .8; animation: bob 7s ease-in-out infinite; }
+  .dd:nth-child(3n+2) { animation-duration: 5.6s; animation-delay: -2s; }
+  .dd:nth-child(3n) { animation: twk 4.4s ease-in-out infinite; animation-delay: -1.2s; transform-box: fill-box; transform-origin: center; }
+  .doodles { opacity: .38; }
+  @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+  @keyframes twk { 0%, 100% { opacity: .85; scale: 1; } 50% { opacity: .3; scale: .78; } }
+  @keyframes rise { 0% { translate: 0 6px; opacity: 0; } 25% { opacity: 1; } 100% { translate: 0 -12px; opacity: 0; } }
+  .couple { width: 214px; height: 99px; margin: 0 -4px; }
+  .quote { max-width: 190px; font-size: 18px; flex: 0 1 190px; }
+  .hero { gap: 18px 26px; }
+  .stat { gap: 10px; }
+  @media (min-width: 1040px) { .hero { flex-wrap: nowrap; } .hero .stat { flex: 0 1 auto; min-width: 0; } }
+  .art2 { stroke-width: 1.5; }
+  .art2 .rs { fill: var(--rose-soft); }
+  .art2 .scr { stroke: none; fill: var(--lav-soft); }
+  .art2 .pl { fill: var(--rose); stroke: none; }
+  .art2 .hfill { fill: var(--rose); stroke: none; }
+  .art2 .gl { stroke: var(--rose); opacity: .55; animation: twk 3s ease-in-out infinite; }
+  .art2 .gnd, .art2 .stitch { stroke: var(--line); }
+  .art2 .stitch { stroke-dasharray: 2 5; stroke: color-mix(in srgb, var(--rose) 55%, var(--line)); }
+  .couple .fl { animation: rise 4.6s ease-in-out infinite; }
+  .couple .fl.b { animation-delay: -1.5s; } .couple .fl.c { animation-delay: -3s; }
+  .couple .tw { animation: twk 3.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .couple .tw.t2 { animation-delay: -1.2s; } .couple .tw.t3 { animation-delay: -2.4s; }
+  .quote { font: 500 21px/1.2 var(--hand); color: var(--ink); opacity: .85; transform: rotate(-2deg); }
+  .bc-art svg { animation: bob 6s ease-in-out infinite; }
+  .bc-art p { transform: rotate(-3deg); color: var(--muted); }
+  @media (max-width: 899px) { .couple { display: block; width: 190px; height: 88px; order: 5; } }
+  @media (prefers-reduced-motion: reduce) { .dd, .couple *, .bc-art svg { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -664,6 +769,7 @@
   <path id="i-YouTube" d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM10 9.5v5l4.5-2.5z"/>
   <path id="i-Peliculas" d="M4 5h16v14H4zM8 5v14M16 5v14M4 10h4M4 14h4M16 10h4M16 14h4"/>
   <path id="i-Series" d="M3 7h18v12H3zM8 3l4 4 4-4"/>
+  <path id="i-Mas18" d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-9z"/>
   <path id="i-Juegos" d="M6 9h12a3 3 0 0 1 3 3.5l-.7 3.6a2 2 0 0 1-3.4.9L15 15H9l-1.9 2a2 2 0 0 1-3.4-.9L3 12.5A3 3 0 0 1 6 9zM8 11v3M6.5 12.5h3M16 12h.01M18 13.5h.01"/>
   <path id="moon" d="M52 8a44 44 0 1 0 40 62A34 34 0 0 1 52 8z"/>
   <path id="leaf" d="M50 90C20 84 8 58 14 24 48 20 82 34 90 62 84 84 68 92 50 90zM18 26C40 46 60 66 88 62"/>
@@ -739,16 +845,36 @@
   <header class="hero">
     <svg class="dd" viewBox="-10 -10 20 20" style="top:10px;left:8px;width:20px;color:var(--lav)"><use href="#spark"/></svg><svg class="dd" viewBox="0 0 100 92" style="top:14px;left:34%;width:34px;color:var(--rose)"><use href="#heart"/></svg><svg class="dd" viewBox="-10 -10 20 20" style="bottom:12px;left:30%;width:18px;color:var(--rose)"><use href="#spark"/></svg><svg class="dd" viewBox="0 0 100 92" style="top:10px;left:56%;width:22px;color:var(--lav)"><use href="#heart"/></svg>
     <div class="brand"><h1>Para ver <svg class="i hf" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg></h1><p class="sub">cosas lindas, juntos.</p></div>
-    <svg class="couple art2" viewBox="0 0 250 120" aria-hidden="true">
-      <path d="M52 120c0-24 14-38 38-38s38 14 38 38"/><circle cx="90" cy="46" r="19"/>
-      <path d="M72 38l-7-9 11 2 3-10 9 8 8-9 4 11 10-3-5 10"/>
-      <path class="fp" d="M104 120c2-22 16-34 38-34s38 12 40 34z"/><circle class="fp" cx="146" cy="56" r="17"/>
-      <path d="M130 50c2-13 24-17 32-3M134 44l-4-7 9 3"/>
-      <circle cx="212" cy="26" r="17"/><path d="M203 40l-6 10 12-6"/><use href="#heart" transform="translate(203 17) scale(.18)"/>
-      <use href="#spark" transform="translate(30 30) scale(.8)"/><use href="#spark" transform="translate(238 80) scale(.6)"/><use href="#heart" transform="translate(6 78) scale(.14)"/><use href="#heart" transform="translate(30 96) scale(.1)"/>
+    <svg class="couple art2" viewBox="0 0 260 120" aria-hidden="true">
+      <path d="M12 114h176" class="gnd"/>
+      <path class="fp" d="M30 112V66a16 16 0 0 1 16-16h112a16 16 0 0 1 16 16v46z"/>
+      <path class="fp" d="M58 100c-1-19 8-30 22-30s23 11 22 30z"/>
+      <circle class="fp" cx="85" cy="56" r="14"/>
+      <path d="M71 54c1-11 9-17 18-14 6 2 9 6 10 11"/>
+      <path d="M81 57h.01M90 57h.01M83 62q3 2.4 6 0"/>
+      <path class="fp" d="M110 100c-1-18 7-29 20-29s21 11 20 29z"/>
+      <circle class="fp" cx="115" cy="58" r="13"/>
+      <path d="M102 57c-1-10 6-16 14-15 6 1 10 5 11 10"/>
+      <path d="M111 59h.01M120 59h.01M113 64q3 2.4 6 0"/>
+      <path class="rs" d="M50 101c26-9 70-9 108 0v13H50z"/>
+      <path d="M62 108c14-5 30-5 44-1M112 108c10-3 24-3 34-1" class="stitch"/>
+      <rect class="fp" x="16" y="84" width="24" height="30" rx="11"/>
+      <rect class="fp" x="156" y="84" width="24" height="30" rx="11"/>
+      <path d="M30 114v4M166 114v4"/>
+      <path class="gl" d="M192 56l-7-4M190 64h-8M192 72l-7 4"/>
+      <rect class="fp" x="198" y="44" width="52" height="38" rx="7"/>
+      <rect class="rs scr" x="203" y="49" width="42" height="28" rx="4"/>
+      <path class="pl" d="M219 56l11 7-11 7z"/>
+      <path d="M224 82v7M212 89h24"/>
+      <g class="fl a"><use href="#heart" class="hfill" transform="translate(96 20) scale(.2)"/></g>
+      <g class="fl b"><use href="#heart" transform="translate(116 6) scale(.12)"/></g>
+      <g class="fl c"><use href="#heart" transform="translate(76 8) scale(.1)"/></g>
+      <g class="tw"><use href="#spark" transform="translate(24 34) scale(.8)"/></g>
+      <g class="tw t2"><use href="#spark" transform="translate(176 18) scale(.6)"/></g>
+      <g class="tw t3"><use href="#spark" transform="translate(246 22) scale(.7)"/></g>
     </svg>
     <p class="quote">“tú y yo…<br>en todas las historias<br>y en todos los mundos.”</p>
-    <div class="stat days"><svg class="i ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg><div><span class="k">Llevamos juntos:</span><p class="big" id="daysBig">—</p><button type="button" class="since" id="sinceBtn"></button><input type="date" id="sinceInput" aria-label="Fecha en que empezaron" hidden><p class="count" id="countTxt"></p></div></div>
+    <div class="stat days"><svg class="i ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg><div><span class="k">Llevamos juntos:</span><p class="big" id="daysBig">—</p><button type="button" class="since" id="sinceBtn"></button><input type="date" id="sinceInput" aria-label="Fecha en que empezaron" hidden><p class="count" id="countTxt"></p><div class="mbar" id="mBar" hidden><i id="mBarFill"></i></div></div></div>
     <div class="stat bd"><svg class="i ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16v8H4zM4 15c3 2 5-2 8 0s5 2 8 0M9 12V8M12 12V7M15 12V8"/></svg><div><span class="k">Cumpleaños</span><ul class="bdays" id="bdayTxt"></ul></div></div>
     <div class="stat pl"><svg class="i ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a4 4 0 0 0 4-4c0-5-4-10-9-10zM7.5 11h.01M10 7h.01M15 7h.01"/></svg><div><span class="k">Paleta de color:</span><div class="themes" id="themes" role="group" aria-label="Paleta de colores"></div><select id="themeDd" aria-label="Paleta"></select></div></div>
     <button type="button" class="baulbtn" id="baulBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-box"/></svg>Nuestro baúl</button>
@@ -766,6 +892,7 @@
   <button type="button" data-k="pelic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-Peliculas"/></svg>Películas</button>
   <button type="button" data-k="serie"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-Series"/></svg>Series</button>
   <button type="button" data-k="juego"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-Juegos"/></svg>Juegos</button>
+  <button type="button" data-k="porno"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-Mas18"/></svg>Porno</button>
   <i class="sep"></i>
   <button type="button" data-go="cfg"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4"/></svg>Configuración</button>
 <div class="side-foot"><svg class="dd" viewBox="-10 -10 20 20" style="right:6px;top:30px;width:22px;color:var(--rose)"><use href="#spark"/></svg><svg class="dd" viewBox="-10 -10 20 20" style="right:20px;bottom:-30px;width:24px;color:var(--lav)"><use href="#spark"/></svg><p class="hand"><svg class="i hf" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg> Diego &amp; Andro</p><p class="hand tilt">gracias por<br>estar en mi vida <svg class="i hf" viewBox="0 0 100 92" aria-hidden="true"><use href="#heart"/></svg></p></div>
@@ -784,12 +911,13 @@
   <form id="form">
     <div class="fld f-url"><label class="fl" for="url">Enlace</label><div class="inw"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.6 0l3-3a4 4 0 0 0-5.6-5.6l-1 1M14 10a4 4 0 0 0-5.6 0l-3 3a4 4 0 0 0 5.6 5.6l1-1"/></svg><input id="url" type="text" placeholder="Pega el enlace aquí..." required></div></div>
     <div class="fld"><span class="fl">¿Quién lo agrega?</span><div class="chips seg" id="whoSelect"><button type="button" class="pill active" data-who="Diego">Diego</button><button type="button" class="pill" data-who="Andro">Andro</button></div></div>
-    <div class="fld"><label class="fl" for="catDd">Categoría</label><div class="inw"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><select id="catDd"><option value="Anime">Anime</option><option value="YouTube">YouTube</option><option value="Peliculas">Películas</option><option value="Series">Series</option><option value="Juegos">Juegos</option></select></div><div class="chips" id="catSelect" hidden>
+    <div class="fld"><label class="fl" for="catDd">Categoría</label><div class="inw"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><select id="catDd"><option value="Anime">Anime</option><option value="YouTube">YouTube</option><option value="Peliculas">Películas</option><option value="Series">Series</option><option value="Juegos">Juegos</option><option value="Mas18">Porno</option></select></div><div class="chips" id="catSelect" hidden>
       <button type="button" class="pill active" data-cat="Anime">Anime</button>
       <button type="button" class="pill" data-cat="YouTube">YouTube</button>
       <button type="button" class="pill" data-cat="Peliculas">Películas</button>
       <button type="button" class="pill" data-cat="Series">Series</button>
       <button type="button" class="pill" data-cat="Juegos">Juegos</button>
+      <button type="button" class="pill" data-cat="Mas18">Porno</button>
     </div></div>
     <div class="fld"><label class="fl" for="noteInput">Nota <small>(opcional)</small></label><input id="noteInput" type="text" placeholder="Escribe una nota..."></div>
     <div class="fld"><label class="fl" for="durInput">Duración <small>(opcional)</small></label><div class="inw"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></svg><select id="durInput" aria-label="Duración"></select></div></div>
@@ -862,6 +990,10 @@
     <p class="lg-sum" id="lgSum">0 de 0</p>
     <div class="lg-row" id="lgRow"></div>
     <div class="lg-btns"><button type="button" class="ghost" id="lgTree"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-6M12 15c-5 0-7-4-5-7 0-4 3-6 5-6s5 2 5 6c2 3 0 7-5 7z"/></svg>Árbol</button><button type="button" class="ghost" id="lgSky"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 5.6L20 9l-4.4 3.8L17 19l-5-3-5 3 1.4-6.2L4 9l5.8-.4z"/></svg>Cielo</button></div>
+  </section>
+  <section class="stats" id="statsCard">
+    <div class="sum-h"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h2>Estadísticas</h2></div>
+    <div id="statsBody"></div>
   </section>
 </aside>
 </div>
@@ -1021,8 +1153,8 @@
   const itemsRef = db.ref('paraVer/items');
 
   const $ = id => document.getElementById(id);
-  const CATEGORIES = ['Anime', 'YouTube', 'Peliculas', 'Series', 'Juegos'];
-  const CAT_LABELS = { Anime: 'Anime', YouTube: 'YouTube', Peliculas: 'Películas', Series: 'Series', Juegos: 'Juegos' };
+  const CATEGORIES = ['Anime', 'YouTube', 'Peliculas', 'Series', 'Juegos', 'Mas18'];
+  const CAT_LABELS = { Anime: 'Anime', YouTube: 'YouTube', Peliculas: 'Películas', Series: 'Series', Juegos: 'Juegos', Mas18: 'Porno' };
   let items = [];
   let currentWho = 'Diego';
   let currentCat = 'Anime';
@@ -1081,7 +1213,11 @@
       const b = document.createElement('b');
       b.textContent = name;
       li.appendChild(b);
-      li.appendChild(document.createTextNode(': ' + String(d).padStart(2, '0') + '/' + String(m).padStart(2, '0') + (left === 0 ? ' · ¡hoy!' : '')));
+      li.appendChild(document.createTextNode(': ' + String(d).padStart(2, '0') + '/' + String(m).padStart(2, '0')));
+      const bl = document.createElement('span');
+      bl.className = 'bl';
+      bl.textContent = left === 0 ? ' · ¡hoy! 🎂' : left === 1 ? ' · mañana' : ' · faltan ' + left + ' días';
+      li.appendChild(bl);
       out.appendChild(li);
     });
   }
@@ -1089,7 +1225,8 @@
 
   function renderCount(d) {
     const out = $('countTxt');
-    if (!(d >= 0)) { out.textContent = ''; return; }
+    const bar = $('mBar');
+    if (!(d >= 0)) { out.textContent = ''; if (bar) bar.hidden = true; return; }
     const [y, m, dd] = since.split('-').map(Number);
     const at = n => { const t = new Date(y, m - 1 + n, dd); return t.getDate() === dd ? t : new Date(y, m + n, 0); };
     const today = new Date();
@@ -1097,6 +1234,14 @@
     let n = 1;
     while (at(n) < today) n++;
     const left = Math.round((at(n) - today) / 864e5);
+    if (bar) {
+      const start = n === 1 ? new Date(y, m - 1, dd) : at(n - 1);
+      const span = Math.max(1, Math.round((at(n) - start) / 864e5));
+      const pct = Math.min(100, Math.max(0, (span - left) / span * 100));
+      bar.hidden = false;
+      $('mBarFill').style.width = pct + '%';
+      bar.title = Math.round(pct) + '% del mes';
+    }
     const ann = n % 12 === 0;
     if (left === 0) {
       out.textContent = ann ? `¡Hoy es su aniversario número ${n / 12}!` : n === 1 ? '¡Hoy cumplen su primer mes!' : `¡Hoy cumplen ${n} meses!`;
@@ -1398,6 +1543,47 @@
     return r;
   }
 
+  function renderStats(counted) {
+    const body = $('statsBody');
+    if (!body) return;
+    body.innerHTML = '';
+    if (!counted.length) { body.appendChild(el('p', 'st-foot', 'Cuando sumen cosas, acá van a aparecer sus números.')); return; }
+    const seenList = counted.filter(i => i.seen);
+    const mins = seenList.reduce((a, i) => a + (Number(i.duration) || 0), 0);
+    const rated = counted.filter(i => i.rating > 0);
+    const avg = rated.length ? rated.reduce((a, i) => a + i.rating, 0) / rated.length : 0;
+
+    const big = el('div', 'st-big');
+    const box = (v, l) => { const d = el('div'); d.appendChild(el('b', null, v)); d.appendChild(el('span', null, l)); return d; };
+    big.append(box(String(seenList.length), 'cosas vistas'), box(mins ? fmtDur(mins) : '—', 'viendo juntos'),
+               box(avg ? avg.toFixed(1) + ' ★' : '—', 'puntaje promedio'), box(String(counted.length - seenList.length), 'por ver'));
+    body.appendChild(big);
+
+    CATEGORIES.forEach(cat => {
+      const all = counted.filter(i => i.category === cat);
+      if (!all.length) return;
+      const sn = all.filter(i => i.seen).length;
+      const row = el('div', 'st-row');
+      const tr = el('div', 'tr'); const f = document.createElement('i'); f.style.width = (sn / all.length * 100) + '%'; tr.appendChild(f);
+      row.append(el('span', null, cat), tr, el('em', null, sn + '/' + all.length));
+      body.appendChild(row);
+    });
+
+    const by = {};
+    counted.forEach(i => { if (i.addedBy) by[i.addedBy] = (by[i.addedBy] || 0) + 1; });
+    const top = Object.entries(by).sort((a, b) => b[1] - a[1]);
+    const best = rated.slice().sort((a, b) => b.rating - a.rating || (b.addedAt || 0) - (a.addedAt || 0))[0];
+    const foot = el('p', 'st-foot');
+    if (top.length) {
+      const b1 = el('b', null, top[0][0]);
+      foot.append(b1, ' agregó más cosas (' + top[0][1] + (top[1] ? ' vs ' + top[1][1] : '') + '). ');
+    }
+    if (best) {
+      foot.append('Mejor puntuada: ', el('b', null, best.title || 'sin título'), ' (' + best.rating + ' ★).');
+    }
+    body.appendChild(foot);
+  }
+
   function render() {
     const counted = items.filter(i => !i.isText);
     const total = counted.length;
@@ -1405,6 +1591,8 @@
     $('sumTxt').textContent = total ? `${seen} de ${total} vistas` : 'Empiecen sumando algo para ver juntos';
     $('track').style.setProperty('--p', total ? seen / total : 0);
     const _pc = $('pct'); if (_pc) _pc.textContent = Math.round(total ? seen / total * 100 : 0) + '%';
+
+    renderStats(counted);
 
     sectionsEl.innerHTML = '';
     for (const cat of CATEGORIES) {
